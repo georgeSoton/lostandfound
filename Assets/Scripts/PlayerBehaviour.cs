@@ -20,7 +20,6 @@ public class PlayerBehaviour : NetworkBehaviour
             var newv = new Vector3(prev.x + Input.GetAxis("Horizontal") * 0.1f,
                                     prev.y + Input.GetAxis("Vertical") * 0.1f,
                                     prev.z);
-
             this.transform.position = newv;
         }
     }
