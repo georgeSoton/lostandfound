@@ -5,17 +5,9 @@ using Mirror;
 
 public class PlayerBehaviour : NetworkBehaviour
 {
-    [SyncVar]
-    Vector3 SyncPosition;
     // Start is called before the first frame update
     void Start()
     {
-    }
-
-    [Command]
-    void UpdatePosition(Vector3 pos)
-    {
-        SyncPosition = pos;
     }
 
     // Update is called once per frame
@@ -30,11 +22,6 @@ public class PlayerBehaviour : NetworkBehaviour
                                     prev.z);
 
             this.transform.position = newv;
-            UpdatePosition(newv);
-        }
-        else
-        {
-            this.transform.position = SyncPosition;
         }
     }
 }
