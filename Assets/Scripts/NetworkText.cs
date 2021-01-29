@@ -20,7 +20,6 @@ public class NetworkText : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -31,7 +30,7 @@ public class NetworkText : NetworkBehaviour
 
     int count = 0;
 
-    [Server]
+    [Command(ignoreAuthority =true)]
     public void Increment()
     {
         count += 1;
