@@ -29,8 +29,12 @@ public class PlayerBehaviour : NetworkBehaviour
                                     prev.y + Input.GetAxis("Vertical") * 0.1f,
                                     prev.z);
 
+            this.transform.position = newv;
             UpdatePosition(newv);
         }
-        this.transform.position = SyncPosition;
+        else
+        {
+            this.transform.position = SyncPosition;
+        }
     }
 }
