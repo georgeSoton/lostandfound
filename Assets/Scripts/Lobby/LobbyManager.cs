@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,7 @@ using Mirror;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using UnityEngine.UI;
 
 public class LobbyManager : NetworkBehaviour
 {
@@ -12,6 +14,8 @@ public class LobbyManager : NetworkBehaviour
     public TMPro.TextMeshProUGUI Header;
     [SerializeField]
     public TMPro.TextMeshProUGUI PlayerCount;
+    [SerializeField] 
+    public Button startButton;
 
     [SyncVar(hook=nameof(PlayerCountChanged))]
     int PlayerCountInt;
@@ -20,7 +24,7 @@ public class LobbyManager : NetworkBehaviour
         PlayerCount.text = n.ToString();
     }
 
-    void Update()
+    void Start()
     {
         if (isServer)
         {
@@ -28,7 +32,14 @@ public class LobbyManager : NetworkBehaviour
             Header.text = $"Hosting on {GetLocalIPAddress()}";
         } else {
             Header.text = "Joined";
+            startButton.GetComponentInChildren<Text>().text = "Waiting for host";
+            startButton.enabled = false;
         }
+    }
+
+    private void Update()
+    {
+        PlayerCountInt = NetworkServer.connections.Count;
     }
 
     public string GetLocalIPAddress()
@@ -46,6 +57,9 @@ public class LobbyManager : NetworkBehaviour
 
      public void StartGame()
      {
-         NetworkManager.singleton.ServerChangeScene("LetterSelect");
+         if (isServer)
+         {
+             NetworkManager.singleton.ServerChangeScene("LetterSelect");
+         }
      }
 }
