@@ -802,6 +802,7 @@ MonoBehaviour:
   syncInterval: 0.1
   Header: {fileID: 117150241}
   PlayerCount: {fileID: 1797567268}
+  startButton: {fileID: 802094033}
 --- !u!114 &1787603270
 MonoBehaviour:
   m_ObjectHideFlags: 0
