@@ -24,6 +24,10 @@ public class TransitionWipe : MonoBehaviour
     void Start()
     {
         BGCam.backgroundColor = BGColours[BGindex];
+
+        Bot.localPosition = new Vector3(0, Bot.rect.height * -1.5f, 0);
+        Mid.localPosition = new Vector3(0, Mid.rect.height * -1.5f, 0);
+        Top.localPosition = new Vector3(0, Top.rect.height * -1.5f, 0);
     }
     public void Obscure()
     {
