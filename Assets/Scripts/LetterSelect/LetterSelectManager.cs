@@ -6,7 +6,7 @@ using Mirror;
 using System.Linq;
 using Random = UnityEngine.Random;
 
-public class MinigameManager : NetworkBehaviour
+public class LetterSelectManager : NetworkBehaviour
 {
     [SerializeField] public Camera PlayerCam;
     [SerializeField] public Camera AssistantCam;
@@ -104,18 +104,32 @@ public class MinigameManager : NetworkBehaviour
         CmdPlayerChose(s);
     }
 
+    bool TaskComplete = false;
     [Command(ignoreAuthority = true)]
     void CmdPlayerChose(string s)
     {
+        if (TaskComplete){return;}
         if (s == CorrectAnswer)
         {
             Debug.Log("Correct");
-            SceneChanger.singleton.NewRandomScene();
+            TaskComplete = true;
+            FlyInBackground();
+            Invoke(nameof(AdvanceScene), 1.5f);
         }
         else
         {
             Debug.Log("Incorrect");
         }
+    }
+    void AdvanceScene()
+    {
+        SceneChanger.singleton.NewRandomScene();
+    }
+
+    [ClientRpc]
+    void FlyInBackground()
+    {
+        FindObjectOfType<TransitionWipe>().Obscure();
     }
 
     [TargetRpc]
