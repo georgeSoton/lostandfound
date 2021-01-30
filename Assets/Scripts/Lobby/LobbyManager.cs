@@ -46,6 +46,6 @@ public class LobbyManager : NetworkBehaviour
 
      public void StartGame()
      {
-         NetworkManager.singleton.ServerChangeScene("LetterSelect");
+         NetworkManager.singleton.ServerChangeScene("ColourMatch");
      }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using Mirror;
 using System.Linq;
 
-public class MinigameManager : NetworkBehaviour
+public class LetterSelectManager : NetworkBehaviour
 {
 
     [SerializeField]
