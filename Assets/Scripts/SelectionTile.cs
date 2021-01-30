@@ -23,7 +23,10 @@ public class SelectionTile : NetworkBehaviour
 
     void OnMouseDown()
     {
-        Clicked.Invoke(Content);
+        if (Clicked != null)
+        {
+            Clicked.Invoke(Content);
+        }
     }
 
     public event System.Action<string> Clicked;
