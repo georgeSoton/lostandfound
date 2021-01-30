@@ -83,7 +83,7 @@ public class ColourMatchManager : NetworkBehaviour
     }
     void AdvanceScene()
     {
-        NetworkManager.singleton.ServerChangeScene("ColourMatch");
+        SceneChanger.singleton.NewRandomScene();
     }
 
     [ClientRpc]

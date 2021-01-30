@@ -426,6 +426,7 @@ MonoBehaviour:
   showDebugMessages: 0
   sceneList:
   - Assets/Scenes/LetterSelect.unity
+  - Assets/Scenes/ColourMatch.unity
 --- !u!114 &353409953
 MonoBehaviour:
   m_ObjectHideFlags: 0
