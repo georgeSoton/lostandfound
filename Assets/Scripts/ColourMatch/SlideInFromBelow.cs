@@ -9,6 +9,6 @@ public class SlideInFromBelow : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.transform.DOLocalMoveY(-500, Duration).From().Play();
+        this.transform.DOLocalMoveY(-2000, Duration).From().Play();
     }
 }
