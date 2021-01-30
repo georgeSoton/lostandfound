@@ -14,10 +14,10 @@ public class LobbyManager : NetworkBehaviour
     public TMPro.TextMeshProUGUI Header;
     [SerializeField]
     public TMPro.TextMeshProUGUI PlayerCount;
-    [SerializeField] 
+    [SerializeField]
     public Button startButton;
 
-    [SyncVar(hook=nameof(PlayerCountChanged))]
+    [SyncVar(hook = nameof(PlayerCountChanged))]
     int PlayerCountInt;
     void PlayerCountChanged(int _, int n)
     {
@@ -30,7 +30,9 @@ public class LobbyManager : NetworkBehaviour
         {
             PlayerCountInt = NetworkServer.connections.Count;
             Header.text = $"Hosting on {GetLocalIPAddress()}";
-        } else {
+        }
+        else
+        {
             Header.text = "Joined";
             startButton.GetComponentInChildren<Text>().text = "Waiting for host";
             startButton.enabled = false;
@@ -43,23 +45,35 @@ public class LobbyManager : NetworkBehaviour
     }
 
     public string GetLocalIPAddress()
-     {
-         var host = Dns.GetHostEntry(Dns.GetHostName());
-         foreach (var ip in host.AddressList)
-         {
-             if (ip.AddressFamily == AddressFamily.InterNetwork)
-             {
-                 return ip.ToString();
-             }
-         }
-         throw new System.Exception("No network adapters with an IPv4 address in the system!");
-     }
+    {
+        var host = Dns.GetHostEntry(Dns.GetHostName());
+        foreach (var ip in host.AddressList)
+        {
+            if (ip.AddressFamily == AddressFamily.InterNetwork)
+            {
+                return ip.ToString();
+            }
+        }
+        throw new System.Exception("No network adapters with an IPv4 address in the system!");
+    }
 
-     public void StartGame()
-     {
-         if (isServer)
-         {
-             NetworkManager.singleton.ServerChangeScene("LetterSelect");
-         }
-     }
+    public void StartGame()
+    {
+        if (isServer)
+        {
+            FlyInBackground();
+            Invoke(nameof(AdvanceScene), 1.5f);
+        }
+    }
+
+    void AdvanceScene()
+    {
+        NetworkManager.singleton.ServerChangeScene("ColourMatch");
+    }
+
+    [ClientRpc]
+    void FlyInBackground()
+    {
+        FindObjectOfType<TransitionWipe>().Obscure();
+    }
 }

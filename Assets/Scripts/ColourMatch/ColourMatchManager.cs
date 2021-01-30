@@ -76,16 +76,27 @@ public class ColourMatchManager : NetworkBehaviour
         if (dist < RequiredAccuracy)
         {
             taskfinished = true;
-            NetworkManager.singleton.ServerChangeScene("ColourMatch");
+            FlyInBackground();
+            Invoke(nameof(AdvanceScene), 1.5f);
         }
         Debug.Log(dist);
+    }
+    void AdvanceScene()
+    {
+        NetworkManager.singleton.ServerChangeScene("ColourMatch");
+    }
+
+    [ClientRpc]
+    void FlyInBackground()
+    {
+        FindObjectOfType<TransitionWipe>().Obscure();
     }
     
     float ColourDistance(Color c1, Color c2)
     {
-        return (Mathf.Pow(Mathf.Abs(c1.r - c2.r)/c2.r,2)
-        + Mathf.Pow(Mathf.Abs(c1.g - c2.g)/c2.g,2)
-        + Mathf.Pow(Mathf.Abs(c1.b - c2.b)/c2.b,2));
+        return (Mathf.Pow(c1.r - c2.r,2)
+        + Mathf.Pow(c1.g - c2.g,2)
+        + Mathf.Pow(c1.b - c2.b,2));
     }
     
     public void SliderChanged()

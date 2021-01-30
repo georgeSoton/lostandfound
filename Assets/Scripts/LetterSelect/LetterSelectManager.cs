@@ -104,18 +104,32 @@ public class LetterSelectManager : NetworkBehaviour
         CmdPlayerChose(s);
     }
 
+    bool TaskComplete = false;
     [Command(ignoreAuthority = true)]
     void CmdPlayerChose(string s)
     {
+        if (TaskComplete){return;}
         if (s == CorrectAnswer)
         {
             Debug.Log("Correct");
-            NetworkManager.singleton.ServerChangeScene("LetterSelect");
+            TaskComplete = true;
+            FlyInBackground();
+            Invoke(nameof(AdvanceScene), 1.5f);
         }
         else
         {
             Debug.Log("Incorrect");
         }
+    }
+    void AdvanceScene()
+    {
+        NetworkManager.singleton.ServerChangeScene("LetterSelect");
+    }
+
+    [ClientRpc]
+    void FlyInBackground()
+    {
+        FindObjectOfType<TransitionWipe>().Obscure();
     }
 
     [TargetRpc]
