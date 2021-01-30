@@ -11,29 +11,41 @@ public enum Minigame
 
 public class ScoreManager : NetworkBehaviour
 {
+    [SyncVar]
     public int maxTimeSeconds = 120;
-    [SerializeField] float currentTimeSeconds = 0;
 
-    public bool isCountdownActive { get; private set; }
-    private float CurrentTimeMinutesOnly { get { return Mathf.Floor(currentTimeSeconds / 60); } }
-    private float CurrentTimeSecondsOnly { get { return Mathf.Floor(currentTimeSeconds % 60); } }
+    [SyncVar]
+    [SerializeField] 
+    float currentTimeSeconds = 0;
+
+
+    private bool isCountdownActive;
+    public float CurrentTimeMinutesOnly { get { return Mathf.Floor(currentTimeSeconds / 60); } }
+    public float CurrentTimeSecondsOnly { get { return Mathf.Floor(currentTimeSeconds % 60); } }
 
 
     private float levelStartTime;
-    public int levelsCleared { get; private set; }
-    public int score { get; private set; }
+    private int levelsCleared;
+
+    [SyncVar]
+    private int score;
+    public int Score { get { return score; } }
 
     // Start is called before the first frame update
     void Start()
     {
-        ResetGame();
+        if (isServer) 
+        {
+            ResetGame();
 
-        //testing (example use of functions)
-        StartMinigame(); 
-        StartCountdown();
-        InvokeRepeating("GetTimeRemaining", 0, 1);
 
-        Invoke("TestGameComplete", 7);
+            //testing (example use of functions)
+            //StartMinigame(); 
+            //StartCountdown();
+            //InvokeRepeating("GetTimeRemaining", 0, 1);
+
+            //Invoke("TestGameComplete", 7);
+        }
     }
 
     //TempTest function
@@ -45,23 +57,26 @@ public class ScoreManager : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isCountdownActive) {
-            currentTimeSeconds -= Time.deltaTime;
-            if (currentTimeSeconds < 0)
-            {
-                currentTimeSeconds = 0;
-                PauseCountdown();
-                //Maybe trigger event when this happens?
+        if (isServer) {
+            if (isCountdownActive) {
+                currentTimeSeconds -= Time.deltaTime;
+                if (currentTimeSeconds < 0)
+                {
+                    currentTimeSeconds = 0;
+                    PauseCountdown();
+                    //Maybe trigger event when this happens?
+                }
             }
-        } 
+        }
     }
 
+    [Server]
     public void AddTimeSeconds(float seconds)
     {
         currentTimeSeconds += seconds;
         if (currentTimeSeconds > maxTimeSeconds) currentTimeSeconds = maxTimeSeconds;
     }
-
+    [Server]
     public void StartCountdown()
     {
         if (!isCountdownActive)
@@ -70,7 +85,7 @@ public class ScoreManager : NetworkBehaviour
             ResumeCountdown();
         }
     }
-
+    [Server]
     public void PauseCountdown()
     {
         isCountdownActive = false;
@@ -79,24 +94,26 @@ public class ScoreManager : NetworkBehaviour
             CancelInvoke("DecrementTimer");
         }
     }
-
+    [Server]
     public void ResumeCountdown()
     {
         isCountdownActive = true;
     }
-
+    [Server]
     void ResetCountdown()
     {
         PauseCountdown();
         currentTimeSeconds = maxTimeSeconds;
     }
 
+    [Server]
     //Call at the start of every minigame
     public void StartMinigame()
     {
         levelStartTime = currentTimeSeconds;
     }
 
+    [Server]
     //Call when a minigame is completed
     public void MinigameComplete(Minigame gameType)
     {
@@ -133,6 +150,7 @@ public class ScoreManager : NetworkBehaviour
 
     }
 
+    [Server]
     public void ResetGame()
     {
         ResetCountdown();
@@ -146,5 +164,10 @@ public class ScoreManager : NetworkBehaviour
         string str = string.Format("{0:00}:{1:00}", CurrentTimeMinutesOnly, CurrentTimeSecondsOnly);
         Debug.Log(str);
         return str;
+    }
+    
+    public float GetTimeRemainingSeconds()
+    {
+        return currentTimeSeconds;
     }
 }
