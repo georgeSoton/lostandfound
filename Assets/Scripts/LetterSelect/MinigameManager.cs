@@ -1,22 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 using System.Linq;
+using Random = UnityEngine.Random;
 
 public class MinigameManager : NetworkBehaviour
 {
+    [SerializeField] public Camera PlayerCam;
+    [SerializeField] public Camera AssistantCam;
+    [SerializeField] public List<SelectionTile> PlayerTiles;
+    [SerializeField] public SelectionTile AssistantClue;
 
-    [SerializeField]
-    public Camera PlayerCam;
-    [SerializeField]
-    public Camera AssistantCam;
-    [SerializeField]
-    public List<SelectionTile> PlayerTiles;
-    [SerializeField]
-    public SelectionTile AssistantClue;
-
-    static string[] Alphabet = new string[26] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
+    static string[] Alphabet = new string[26]
+    {
+        "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V",
+        "W", "X", "Y", "Z"
+    };
 
     string CorrectAnswer = null;
 
@@ -40,16 +41,27 @@ public class MinigameManager : NetworkBehaviour
 
         var clientkeys = NetworkServer.connections.Keys.ToArray();
         playerID = NetworkServer.connections[clientkeys[Random.Range(0, clientkeys.Length)]];
-    
     }
 
-    [Command(ignoreAuthority=true)]
+    private void Update()
+    {
+        if (isServer)
+        {
+            if (!NetworkServer.connections.ContainsKey(playerID.connectionId))
+            {
+                NetworkManager.singleton.ServerChangeScene("LetterSelect");
+            }
+        }
+    }
+
+    [Command(ignoreAuthority = true)]
     void CmdClientReady(NetworkConnectionToClient conn = null)
     {
         if (conn.connectionId == playerID.connectionId)
         {
             TargetMakePlayer(conn);
-        } else
+        }
+        else
         {
             TargetMakeAssistant(conn);
         }
@@ -60,7 +72,9 @@ public class MinigameManager : NetworkBehaviour
         base.OnStartClient();
         CmdClientReady();
     }
+
     bool subbedToTiles = false;
+
     void SubToTiles()
     {
         Debug.Log("Subbing to tiles");
@@ -84,6 +98,7 @@ public class MinigameManager : NetworkBehaviour
             }
         }
     }
+
     void TileClickedHandler(string s)
     {
         CmdPlayerChose(s);
@@ -113,6 +128,7 @@ public class MinigameManager : NetworkBehaviour
         AssistantCam.enabled = false;
         SubToTiles();
     }
+
     [TargetRpc]
     void TargetMakeAssistant(NetworkConnection conn)
     {
