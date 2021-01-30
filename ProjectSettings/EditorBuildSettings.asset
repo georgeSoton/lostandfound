@@ -5,14 +5,14 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/Main.unity
+    path: Assets/Scenes/Menu.unity
+    guid: 86d2e78ec220a8741baa2ac3f17589a9
+  - enabled: 1
+    path: Assets/Scenes/Lobby.unity
+    guid: e99b6eb3160610c459bf3aa0e0e7431b
+  - enabled: 1
+    path: Assets/Scenes/LetterSelect.unity
     guid: 2ded56c5ea5b8934984401630f008e63
-  - enabled: 1
-    path: Assets/Scenes/DootDootDoot.unity
-    guid: 6a346bd67648f5c448a26a58d0c97712
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: e12ddc2899b5cf44bbc4410f9cfc4655, type: 2}
