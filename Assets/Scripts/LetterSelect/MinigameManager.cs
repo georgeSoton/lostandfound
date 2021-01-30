@@ -107,7 +107,9 @@ public class MinigameManager : NetworkBehaviour
     void TargetMakePlayer(NetworkConnection conn)
     {
         Debug.Log("Player");
+        PlayerCam.gameObject.SetActive(true);
         PlayerCam.enabled = true;
+        AssistantCam.gameObject.SetActive(false);
         AssistantCam.enabled = false;
         SubToTiles();
     }
@@ -115,7 +117,9 @@ public class MinigameManager : NetworkBehaviour
     void TargetMakeAssistant(NetworkConnection conn)
     {
         Debug.Log("Assistant");
+        PlayerCam.gameObject.SetActive(false);
         PlayerCam.enabled = false;
+        AssistantCam.gameObject.SetActive(true);
         AssistantCam.enabled = true;
         UnsubFromTiles();
     }
