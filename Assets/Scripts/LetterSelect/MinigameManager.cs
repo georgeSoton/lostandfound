@@ -49,7 +49,7 @@ public class MinigameManager : NetworkBehaviour
         {
             if (!NetworkServer.connections.ContainsKey(playerID.connectionId))
             {
-                NetworkManager.singleton.ServerChangeScene("LetterSelect");
+                SceneChanger.singleton.NewRandomScene();
             }
         }
     }
@@ -110,7 +110,7 @@ public class MinigameManager : NetworkBehaviour
         if (s == CorrectAnswer)
         {
             Debug.Log("Correct");
-            NetworkManager.singleton.ServerChangeScene("LetterSelect");
+            SceneChanger.singleton.NewRandomScene();
         }
         else
         {
