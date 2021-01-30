@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,6 +35,11 @@ public class LobbyManager : NetworkBehaviour
             startButton.GetComponentInChildren<Text>().text = "Waiting for host";
             startButton.enabled = false;
         }
+    }
+
+    private void Update()
+    {
+        PlayerCountInt = NetworkServer.connections.Count;
     }
 
     public string GetLocalIPAddress()
