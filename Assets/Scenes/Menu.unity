@@ -423,8 +423,8 @@ MonoBehaviour:
   showDebugMessages: 0
   sceneList:
   - Assets/Scenes/Maze.unity
-  - Assets/Scenes/LetterSelect.unity
-  - Assets/Scenes/ColourMatch.unity
+  - Assets/Scenes/Maze.unity
+  - Assets/Scenes/Maze.unity
 --- !u!1 &487685271
 GameObject:
   m_ObjectHideFlags: 0

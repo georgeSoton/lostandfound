@@ -14,6 +14,8 @@ public class MazeManager : NetworkBehaviour
     [SerializeField]
     public GameObject ClosedTile;
     [SerializeField]
+    public GameObject EndObject;
+    [SerializeField]
     public Canvas MazeCanvas;
     [SerializeField]
     public RectTransform PlayerLocation;
@@ -61,6 +63,8 @@ public class MazeManager : NetworkBehaviour
                 AddTile(Mazes.mazes[maze, y, x] ? OpenTile : ClosedTile, x, y);
             }
         }
+
+        AddTile(EndObject, Mazes.xsize - 1, 0);
     }
     void AddTile(GameObject tile, int x, int y)
     {
@@ -134,10 +138,31 @@ public class MazeManager : NetworkBehaviour
             var newloc = Mazes.TilePosition(newx, newy);
             playerposition = new int[] {newx, newy};
             MovingATM=true;
-            PlayerLocation.DOAnchorPos(newloc, 0.4f).OnComplete(()=>MovingATM=false).Play();
+            PlayerLocation.DOAnchorPos(newloc, 0.4f).OnComplete(()=>FinishedMoving()).Play();
         }
     }
 
+    [Server]
+    void FinishedMoving()
+    {
+        if (playerposition[0] == Mazes.xsize - 1 && playerposition[1] == 0)
+        {
+            FlyInBackground();
+            Invoke(nameof(AdvanceScene), 1.5f);
+        } else {
+            MovingATM = false;
+        }
+    }
+    void AdvanceScene()
+    {
+        SceneChanger.singleton.NewRandomScene();
+    }
+
+    [ClientRpc]
+    void FlyInBackground()
+    {
+        FindObjectOfType<TransitionWipe>().Obscure();
+    }
     bool AxisReadyForNewMovement = true;
     void Update()
     {
