@@ -25,6 +25,8 @@ public class LetterSelectManager : NetworkBehaviour
 
     public override void OnStartServer()
     {
+        ScoreManager.singleton.StartMinigame();
+        
         var localalpha = new List<string>(Alphabet);
         CorrectAnswer = localalpha[Random.Range(0, localalpha.Count)];
         Debug.Log($"Correct answer is {CorrectAnswer}");
@@ -114,6 +116,7 @@ public class LetterSelectManager : NetworkBehaviour
             Debug.Log("Correct");
             TaskComplete = true;
             FlyInBackground();
+            ScoreManager.singleton.MinigameComplete(Minigame.LetterSelect);
             Invoke(nameof(AdvanceScene), 1.5f);
         }
         else

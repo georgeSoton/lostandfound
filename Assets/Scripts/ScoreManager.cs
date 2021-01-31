@@ -5,8 +5,8 @@ using Mirror;
 using UnityEngine.Serialization;
 public enum Minigame
 {
-    SymbolMatch,
-    Maze,
+    LetterSelect,
+    ColourMatch,
 }
 
 public class ScoreManager : NetworkBehaviour
@@ -37,13 +37,20 @@ public class ScoreManager : NetworkBehaviour
 
     public static ScoreManager singleton { get; private set; }
 
-    private void Awake()
+    public override void OnStartClient()
     {
+        base.OnStartClient();
+        InitializeSingleton();
+    }
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
         InitializeSingleton();
     }
 
     bool InitializeSingleton()
     {
+        Debug.Log("Initialising Score manager");
         if (singleton != null && singleton == this) return true;
 
         LogFilter.Debug = showDebugMessages;
@@ -61,6 +68,7 @@ public class ScoreManager : NetworkBehaviour
         singleton = this;
         if (Application.isPlaying) DontDestroyOnLoad(gameObject);
 
+        Debug.Log("Finish initialisation");
         return true;
     }
 
@@ -81,7 +89,7 @@ public class ScoreManager : NetworkBehaviour
     //TempTest function
     void TestGameComplete()
     {
-        MinigameComplete(Minigame.SymbolMatch);
+        MinigameComplete(Minigame.LetterSelect);
     }
 
     // Update is called once per frame
@@ -119,10 +127,6 @@ public class ScoreManager : NetworkBehaviour
     public void PauseCountdown()
     {
         isCountdownActive = false;
-        if (IsInvoking("DecrementTimer"))
-        {
-            CancelInvoke("DecrementTimer");
-        }
     }
     [Server]
     public void ResumeCountdown()
@@ -141,12 +145,14 @@ public class ScoreManager : NetworkBehaviour
     public void StartMinigame()
     {
         levelStartTime = currentTimeSeconds;
+        ResumeCountdown();
     }
 
     [Server]
     //Call when a minigame is completed
     public void MinigameComplete(Minigame gameType)
     {
+        PauseCountdown();
         int baseScore;
         int extraTimeSeconds;
         float maxScoreClearTime;
@@ -154,7 +160,7 @@ public class ScoreManager : NetworkBehaviour
         float TimeBonusMax;
         switch (gameType)
         {
-            case Minigame.SymbolMatch:
+            case Minigame.LetterSelect:
                 baseScore = 200;
                 extraTimeSeconds = 5;
                 maxScoreClearTime = 7;
