@@ -427,6 +427,7 @@ MonoBehaviour:
   sceneList:
   - Assets/Scenes/LetterSelect.unity
   - Assets/Scenes/ColourMatch.unity
+  - Assets/Scenes/Sorter.unity
 --- !u!114 &353409953
 MonoBehaviour:
   m_ObjectHideFlags: 0
