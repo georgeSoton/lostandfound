@@ -422,9 +422,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showDebugMessages: 0
   sceneList:
-  - Assets/Scenes/Maze.unity
-  - Assets/Scenes/Maze.unity
-  - Assets/Scenes/Maze.unity
+  - Maze
+  - Maze
+  - Maze
 --- !u!1 &487685271
 GameObject:
   m_ObjectHideFlags: 0
