@@ -72,26 +72,6 @@ public class ScoreManager : NetworkBehaviour
         return true;
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        //ResetGame();
-
-
-            //testing (example use of functions)
-            //StartMinigame(); 
-            //StartCountdown();
-            //InvokeRepeating("GetTimeRemaining", 0, 1);
-
-            //Invoke("TestGameComplete", 7);
-    }
-
-    //TempTest function
-    void TestGameComplete()
-    {
-        MinigameComplete(Minigame.LetterSelect);
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -109,35 +89,19 @@ public class ScoreManager : NetworkBehaviour
     }
 
     [Server]
+    //Adds the given amount of time to the timer
     public void AddTimeSeconds(float seconds)
     {
         currentTimeSeconds += seconds;
         if (currentTimeSeconds > maxTimeSeconds) currentTimeSeconds = maxTimeSeconds;
     }
+
     [Server]
-    public void StartCountdown()
+    //Deducts the given value from the current score
+    public void ScorePenalty(int scoreToDeduct) 
     {
-        if (!isCountdownActive)
-        {
-            ResetCountdown();
-            ResumeCountdown();
-        }
-    }
-    [Server]
-    public void PauseCountdown()
-    {
-        isCountdownActive = false;
-    }
-    [Server]
-    public void ResumeCountdown()
-    {
-        isCountdownActive = true;
-    }
-    [Server]
-    void ResetCountdown()
-    {
-        PauseCountdown();
-        currentTimeSeconds = maxTimeSeconds;
+        score -= scoreToDeduct;
+        if (score < 0) score = 0;
     }
 
     [Server]
@@ -205,5 +169,31 @@ public class ScoreManager : NetworkBehaviour
     public float GetTimeRemainingSeconds()
     {
         return currentTimeSeconds;
+    }
+
+    [Server]
+    void StartCountdown()
+    {
+        if (!isCountdownActive)
+        {
+            ResetCountdown();
+            ResumeCountdown();
+        }
+    }
+    [Server]
+    void PauseCountdown()
+    {
+        isCountdownActive = false;
+    }
+    [Server]
+    void ResumeCountdown()
+    {
+        isCountdownActive = true;
+    }
+    [Server]
+    void ResetCountdown()
+    {
+        PauseCountdown();
+        currentTimeSeconds = maxTimeSeconds;
     }
 }
