@@ -13,12 +13,14 @@ public class LetterSelectManager : NetworkBehaviour
     [SerializeField] public List<SelectionTile> PlayerTiles;
     [SerializeField] public SelectionTile AssistantClue;
 
-    static string[] Alphabet = new string[26]
+    List<String[]> Alphabets = new List<String[]>
     {
-        "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V",
-        "W", "X", "Y", "Z"
+        new string[] {":)", ":(", ";)", ";P", ":o", ">:(", ":c", "¬_¬", "uwu", ":'(", ":')", ">_<", "O-o", ":D", ">:D", ":S", ":X", ":|", ":/", ";*", "xD", "=3", "( ͡° ͜ʖ ͡°)", "T-T"},
+        new string[] {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V",
+        "W", "X", "Y", "Z"},
+        new string[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},
+        new string[] {"!", "?", "@", "%", "£", "$", "*", ":", ";", "(", "{", "<", "&", "\"","#", "+", "-", "=", "^"}
     };
-
     string CorrectAnswer = null;
 
     NetworkConnection playerID;
@@ -27,7 +29,7 @@ public class LetterSelectManager : NetworkBehaviour
     {
         ScoreManager.singleton.StartMinigame();
         
-        var localalpha = new List<string>(Alphabet);
+        var localalpha = new List<string>(Alphabets[Random.Range(0, Alphabets.Count)]);
         CorrectAnswer = localalpha[Random.Range(0, localalpha.Count)];
         Debug.Log($"Correct answer is {CorrectAnswer}");
         localalpha.Remove(CorrectAnswer);
