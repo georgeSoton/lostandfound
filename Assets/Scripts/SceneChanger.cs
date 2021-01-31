@@ -61,11 +61,12 @@ public class SceneChanger : NetworkBehaviour
 
     public void NewRandomScene()
     {
-        var newScene = _scenes[Random.Range(0, sceneList.Length)];
+        var newScene = _scenes[Random.Range(0, _scenes.Count)];
         _scenes.Remove(newScene);
-        if (_scenes.Count>=0)
+        if (_scenes.Count<=0)
         {
             _scenes.AddRange(sceneList);
+            _scenes.Remove(newScene); //prevent selecting the same scene twice
         }
         NetworkManager.singleton.ServerChangeScene(newScene);
     }
