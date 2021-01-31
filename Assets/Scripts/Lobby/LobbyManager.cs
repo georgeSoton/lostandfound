@@ -62,6 +62,7 @@ public class LobbyManager : NetworkBehaviour
         if (isServer)
         {
             FlyInBackground();
+            ScoreManager.singleton.ResetGame();
             Invoke(nameof(AdvanceScene), 1.5f);
         }
     }

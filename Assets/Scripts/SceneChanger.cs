@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public class SceneChanger : NetworkBehaviour
+public class SceneChanger : MonoBehaviour
 {
     /// <summary>
     /// Enables verbose debug messages in the console

@@ -9,14 +9,15 @@ public class SelectionTile : NetworkBehaviour
     TMPro.TextMeshProUGUI tm;
     [SyncVar(hook=nameof(ContentChangedHook))]
     string Content;
-
+    Vector3 targetscale;
     void Awake()
     {
+        targetscale = transform.localScale;
         transform.localScale = Vector3.zero;
     }
     void Start()
     {
-        transform.DOScale(1f, Random.Range(0.5f, 1f)).Play();
+        transform.DOScale(targetscale, Random.Range(0.5f, 1f)).Play();
     }
 
     void ContentChangedHook(string _, string n)
