@@ -25,9 +25,9 @@ public class TransitionWipe : MonoBehaviour
     {
         BGCam.backgroundColor = BGColours[BGindex];
 
-        Bot.localPosition = new Vector3(0, Bot.rect.height * -1.5f, 0);
-        Mid.localPosition = new Vector3(0, Mid.rect.height * -1.5f, 0);
-        Top.localPosition = new Vector3(0, Top.rect.height * -1.5f, 0);
+        Bot.anchoredPosition = new Vector3(0, Bot.rect.height * -1f, 0);
+        Mid.anchoredPosition = new Vector3(0, Mid.rect.height * -1f, 0);
+        Top.anchoredPosition = new Vector3(0, Top.rect.height * -1f, 0);
     }
     public void Obscure()
     {
@@ -37,8 +37,8 @@ public class TransitionWipe : MonoBehaviour
         Mid.GetComponentInChildren<UnityEngine.UI.Image>().color = midcolour;
         Top.GetComponentInChildren<UnityEngine.UI.Image>().color = topcolour;
 
-        Bot.DOLocalMoveY(0, 0.6f).SetEase(Ease.InOutCubic).Play();
-        Mid.DOLocalMoveY(0, 0.8f).SetEase(Ease.InOutCubic).Play();
-        Top.DOLocalMoveY(0, 1.2f).SetEase(Ease.InOutCubic).Play();
+        Bot.DOAnchorPos(new Vector3(0, Bot.rect.height), 0.6f).SetEase(Ease.InOutCubic).Play();
+        Mid.DOAnchorPos(new Vector3(0, Mid.rect.height), 0.8f).SetEase(Ease.InOutCubic).Play();
+        Top.DOAnchorPos(new Vector3(0, Top.rect.height), 1.2f).SetEase(Ease.InOutCubic).Play();
     }
 }
