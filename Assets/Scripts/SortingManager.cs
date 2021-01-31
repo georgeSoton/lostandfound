@@ -4,7 +4,7 @@ using UnityEngine;
 using Mirror;
 using System.Linq;
 
-public class ColourMatchManager : NetworkBehaviour
+public class SortingManager : NetworkBehaviour
 {
     bool amPlayer = false;
 

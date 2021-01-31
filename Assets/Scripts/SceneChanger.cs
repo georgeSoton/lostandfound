@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -22,11 +24,14 @@ public class SceneChanger : NetworkBehaviour
     [Tooltip("A List of all Scenes holding Minigames")]
     public string[] sceneList;
 
+    private List<String> _scenes;
+
     public static SceneChanger singleton { get; private set; }
 
     private void Awake()
     {
         InitializeSingleton();
+        _scenes = new List<string>(sceneList);
     }
 
     bool InitializeSingleton()
@@ -56,6 +61,12 @@ public class SceneChanger : NetworkBehaviour
 
     public void NewRandomScene()
     {
-        NetworkManager.singleton.ServerChangeScene(sceneList[Random.Range(0, sceneList.Length)]);
+        var newScene = _scenes[Random.Range(0, sceneList.Length)];
+        _scenes.Remove(newScene);
+        if (_scenes.Count>=0)
+        {
+            _scenes.AddRange(sceneList);
+        }
+        NetworkManager.singleton.ServerChangeScene(newScene);
     }
 }
