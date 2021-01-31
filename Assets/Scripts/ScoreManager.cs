@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
-
+using UnityEngine.Serialization;
 public enum Minigame
 {
     SymbolMatch,
@@ -11,6 +11,10 @@ public enum Minigame
 
 public class ScoreManager : NetworkBehaviour
 {
+    [FormerlySerializedAs("m_ShowDebugMessages")]
+    [Tooltip("This will enable verbose debug messages in the Unity Editor console")]
+    public bool showDebugMessages;
+
     [SyncVar]
     public int maxTimeSeconds = 120;
 
@@ -31,12 +35,39 @@ public class ScoreManager : NetworkBehaviour
     private int score;
     public int Score { get { return score; } }
 
+    public static ScoreManager singleton { get; private set; }
+
+    private void Awake()
+    {
+        InitializeSingleton();
+    }
+
+    bool InitializeSingleton()
+    {
+        if (singleton != null && singleton == this) return true;
+
+        LogFilter.Debug = showDebugMessages;
+        if (LogFilter.Debug)
+        {
+            LogFactory.EnableDebugMode();
+        }
+
+        if (singleton != null)
+        {
+            Destroy(gameObject);
+            return false;
+        }
+
+        singleton = this;
+        if (Application.isPlaying) DontDestroyOnLoad(gameObject);
+
+        return true;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        if (isServer) 
-        {
-            ResetGame();
+        //ResetGame();
 
 
             //testing (example use of functions)
@@ -45,7 +76,6 @@ public class ScoreManager : NetworkBehaviour
             //InvokeRepeating("GetTimeRemaining", 0, 1);
 
             //Invoke("TestGameComplete", 7);
-        }
     }
 
     //TempTest function
@@ -162,7 +192,7 @@ public class ScoreManager : NetworkBehaviour
     public string GetTimeRemaining()
     {
         string str = string.Format("{0:00}:{1:00}", CurrentTimeMinutesOnly, CurrentTimeSecondsOnly);
-        Debug.Log(str);
+        //Debug.Log(str);
         return str;
     }
     
