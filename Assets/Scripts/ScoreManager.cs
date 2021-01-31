@@ -2,15 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
-
+using UnityEngine.Serialization;
 public enum Minigame
 {
-    SymbolMatch,
-    Maze,
+    LetterSelect,
+    ColourMatch,
 }
 
 public class ScoreManager : NetworkBehaviour
 {
+    [FormerlySerializedAs("m_ShowDebugMessages")]
+    [Tooltip("This will enable verbose debug messages in the Unity Editor console")]
+    public bool showDebugMessages;
+
     [SyncVar]
     public int maxTimeSeconds = 120;
 
@@ -31,12 +35,47 @@ public class ScoreManager : NetworkBehaviour
     private int score;
     public int Score { get { return score; } }
 
+    public static ScoreManager singleton { get; private set; }
+
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+        InitializeSingleton();
+    }
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+        InitializeSingleton();
+    }
+
+    bool InitializeSingleton()
+    {
+        Debug.Log("Initialising Score manager");
+        if (singleton != null && singleton == this) return true;
+
+        LogFilter.Debug = showDebugMessages;
+        if (LogFilter.Debug)
+        {
+            LogFactory.EnableDebugMode();
+        }
+
+        if (singleton != null)
+        {
+            Destroy(gameObject);
+            return false;
+        }
+
+        singleton = this;
+        if (Application.isPlaying) DontDestroyOnLoad(gameObject);
+
+        Debug.Log("Finish initialisation");
+        return true;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        if (isServer) 
-        {
-            ResetGame();
+        //ResetGame();
 
 
             //testing (example use of functions)
@@ -45,13 +84,12 @@ public class ScoreManager : NetworkBehaviour
             //InvokeRepeating("GetTimeRemaining", 0, 1);
 
             //Invoke("TestGameComplete", 7);
-        }
     }
 
     //TempTest function
     void TestGameComplete()
     {
-        MinigameComplete(Minigame.SymbolMatch);
+        MinigameComplete(Minigame.LetterSelect);
     }
 
     // Update is called once per frame
@@ -89,10 +127,6 @@ public class ScoreManager : NetworkBehaviour
     public void PauseCountdown()
     {
         isCountdownActive = false;
-        if (IsInvoking("DecrementTimer"))
-        {
-            CancelInvoke("DecrementTimer");
-        }
     }
     [Server]
     public void ResumeCountdown()
@@ -111,12 +145,14 @@ public class ScoreManager : NetworkBehaviour
     public void StartMinigame()
     {
         levelStartTime = currentTimeSeconds;
+        ResumeCountdown();
     }
 
     [Server]
     //Call when a minigame is completed
     public void MinigameComplete(Minigame gameType)
     {
+        PauseCountdown();
         int baseScore;
         int extraTimeSeconds;
         float maxScoreClearTime;
@@ -124,7 +160,7 @@ public class ScoreManager : NetworkBehaviour
         float TimeBonusMax;
         switch (gameType)
         {
-            case Minigame.SymbolMatch:
+            case Minigame.LetterSelect:
                 baseScore = 200;
                 extraTimeSeconds = 5;
                 maxScoreClearTime = 7;
@@ -162,7 +198,7 @@ public class ScoreManager : NetworkBehaviour
     public string GetTimeRemaining()
     {
         string str = string.Format("{0:00}:{1:00}", CurrentTimeMinutesOnly, CurrentTimeSecondsOnly);
-        Debug.Log(str);
+        //Debug.Log(str);
         return str;
     }
     

@@ -41,6 +41,7 @@ public class ColourMatchManager : NetworkBehaviour
 
     public override void OnStartServer()
     {
+        ScoreManager.singleton.StartMinigame();
         CorrectAnswer = new Color(Random.Range(0f,1f), Random.Range(0f,1f), Random.Range(0f,1f));
         Debug.Log($"Correct answer is {CorrectAnswer}");
         var clientkeys = NetworkServer.connections.Keys.ToArray();
@@ -77,6 +78,7 @@ public class ColourMatchManager : NetworkBehaviour
         {
             taskfinished = true;
             FlyInBackground();
+            ScoreManager.singleton.MinigameComplete(Minigame.ColourMatch);
             Invoke(nameof(AdvanceScene), 1.5f);
         }
         Debug.Log(dist);
