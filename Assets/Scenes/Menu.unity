@@ -422,8 +422,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showDebugMessages: 0
   sceneList:
-  - Assets/Scenes/Maze.unity
-  - Assets/Scenes/Maze.unity
+  - Assets/Scenes/ColourMatch.unity
+  - Assets/Scenes/LetterSelect.unity
   - Assets/Scenes/Maze.unity
 --- !u!1 &487685271
 GameObject:
