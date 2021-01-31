@@ -37,8 +37,14 @@ public class ScoreManager : NetworkBehaviour
 
     public static ScoreManager singleton { get; private set; }
 
-    private void Awake()
+    public override void OnStartClient()
     {
+        base.OnStartClient();
+        InitializeSingleton();
+    }
+    public override void OnStartServer()
+    {
+        base.OnStartClient();
         InitializeSingleton();
     }
 
