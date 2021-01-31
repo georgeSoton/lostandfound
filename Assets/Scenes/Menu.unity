@@ -337,6 +337,7 @@ GameObject:
   - component: {fileID: 353409950}
   - component: {fileID: 353409949}
   - component: {fileID: 353409952}
+  - component: {fileID: 353409953}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -424,6 +425,7 @@ MonoBehaviour:
   sceneList:
   - Assets/Scenes/LetterSelect.unity
   - Assets/Scenes/ColourMatch.unity
+  - Assets/Scenes/Maze.unity
   - Assets/Scenes/Sorter.unity
 --- !u!114 &353409953
 MonoBehaviour:
