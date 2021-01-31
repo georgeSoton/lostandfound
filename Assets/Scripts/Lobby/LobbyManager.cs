@@ -21,7 +21,7 @@ public class LobbyManager : NetworkBehaviour
     int PlayerCountInt;
     void PlayerCountChanged(int _, int n)
     {
-        PlayerCount.text = n.ToString();
+        PlayerCount.text = "Players Connected: "+n.ToString();
     }
 
     void Start()
