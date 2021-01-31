@@ -51,7 +51,7 @@ public class LetterSelectManager : NetworkBehaviour
         {
             if (!NetworkServer.connections.ContainsKey(playerID.connectionId))
             {
-                SceneChanger.singleton.NewRandomScene();
+                Invoke(nameof(AdvanceScene), 1.5f);
             }
         }
     }

@@ -39,6 +39,17 @@ public class ColourMatchManager : NetworkBehaviour
 
     NetworkConnection playerID;
 
+    private void Update()
+    {
+        if (isServer)
+        {
+            if (!NetworkServer.connections.ContainsKey(playerID.connectionId))
+            {
+                Invoke(nameof(AdvanceScene), 1.5f);
+            }
+        }
+    }
+    
     public override void OnStartServer()
     {
         ScoreManager.singleton.StartMinigame();
