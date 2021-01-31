@@ -11,5 +11,6 @@ public class FollowOther : MonoBehaviour
     void Update()
     {
         transform.position = target.position;
+        transform.rotation = target.rotation;
     }
 }

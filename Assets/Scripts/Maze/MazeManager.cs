@@ -133,13 +133,24 @@ public class MazeManager : NetworkBehaviour
         }
         int newx = playerposition[0] + xdif;
         int newy = playerposition[1] + ydif;
-        if ((newx < 0) || (newx >= Mazes.xsize) || (newy < 0) || (newy >= Mazes.ysize) ) {return;}
+        if ((newx < 0) || (newx >= Mazes.xsize) || (newy < 0) || (newy >= Mazes.ysize) ) {FailShake(); return;}
         if (Mazes.mazes[ChosenMaze, newy, newx]) {
             var newloc = Mazes.TilePosition(newx, newy);
             playerposition = new int[] {newx, newy};
             MovingATM=true;
             PlayerLocation.DOAnchorPos(newloc, 0.4f).OnComplete(()=>FinishedMoving()).Play();
+        } else
+        {
+            FailShake(); return;
         }
+    }
+
+    void FailShake()
+    {
+        MovingATM=true;
+        PlayerLocation.DOShakeRotation(0.5f, strength:new Vector3(0,0,10)).Play();
+        PlayerLocation.DOShakeAnchorPos(0.5f, strength: 10).OnComplete(()=>FinishedMoving()).Play();
+        
     }
 
     [Server]
