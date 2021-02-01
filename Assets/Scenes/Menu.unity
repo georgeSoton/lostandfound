@@ -422,8 +422,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showDebugMessages: 0
   sceneList:
-  - Maze
-  - Maze
+  - LetterSelect
+  - ColourMatch
   - Maze
 --- !u!1 &487685271
 GameObject:

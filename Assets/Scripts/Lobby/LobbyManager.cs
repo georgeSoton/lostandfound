@@ -16,8 +16,6 @@ public class LobbyManager : NetworkBehaviour
     public TMPro.TextMeshProUGUI PlayerCount;
     [SerializeField]
     public Button startButton;
-    [SerializeField]
-    public GameOptionsPanelBehaviour selectedSettings;
 
 
     [SyncVar(hook = nameof(PlayerCountChanged))]
@@ -62,16 +60,11 @@ public class LobbyManager : NetworkBehaviour
 
     public void StartGame()
     {
+        Debug.Log("StartGameCalled: "+isServer);
+        Debug.Log(SettingsManager.singleton.levelSelectMap["Maze"]);
         if (isServer)
         {
             FlyInBackground();
-            //Overwrite currently synced settings 
-            SettingsManager.singleton.levelSelectMap.Clear();
-            foreach(KeyValuePair<string,bool> record in selectedSettings.levelSelectMap)
-            {
-                SettingsManager.singleton.levelSelectMap.Add(record);
-            }
-                
             ScoreManager.singleton.ResetGame();
             Invoke(nameof(AdvanceScene), 1.5f);
         }

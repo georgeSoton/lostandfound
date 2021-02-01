@@ -3,13 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
-public class GameOptionsPanelBehaviour : MonoBehaviour
+using Mirror;
+public class GameOptionsPanelBehaviour : NetworkBehaviour
 {
     [SerializeField] List<Toggle> levelSelectToggleList;
-    public Dictionary<string, bool> levelSelectMap;
+    //public Dictionary<string, bool> levelSelectMap;
 
-    // Start is called before the first frame update
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+    }
+
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+    }
+
     void Start()
+    {
+        if (isServer)
+        {
+            SyncToggleState();
+        }
+        if (isClientOnly)
+        {
+            SettingsManager.singleton.levelSelectMap.Callback += SetToggle;
+            foreach (Toggle t in levelSelectToggleList)
+            {
+                t.interactable = false;
+            }
+        }
+    }
+    // Start is called before the first frame update
+    [Server]
+    void SyncToggleState()
     {
         
         if(SceneChanger.singleton != null) {
@@ -19,24 +46,38 @@ public class GameOptionsPanelBehaviour : MonoBehaviour
             }
         }
 
-        levelSelectMap = new Dictionary<string, bool>();
+        SettingsManager.singleton.levelSelectMap.Clear();
         for (int i = 0; i < levelSelectToggleList.Count; i++)
         {
             Toggle toggle = levelSelectToggleList[i]; //Required so delegate does not capture index
             Debug.Log("Adding " + toggle.name + ", " + toggle.isOn);
-            levelSelectMap.Add(toggle.name, toggle.isOn);
+            
+            SettingsManager.singleton.levelSelectMap.Add(toggle.name, toggle.isOn);
+            toggle.onValueChanged.RemoveAllListeners();
             toggle.onValueChanged.AddListener(delegate 
             {
                 ToggleValueChanged(toggle);
             });
-
         }
     }
 
+    [Server]
     void ToggleValueChanged(Toggle toggle)
     {
         Debug.Log("Setting " + toggle.name + ", " + toggle.isOn);
-        levelSelectMap[name] = toggle.isOn;
-        Debug.Log(levelSelectMap[name]);
+        
+        SettingsManager.singleton.levelSelectMap[toggle.name] = toggle.isOn;
+        //SettingsManager.singleton.levelSelectMap[name] = SettingsManager.singleton.levelSelectMap[name];
+        Debug.Log(SettingsManager.singleton.levelSelectMap[toggle.name]);
+    }
+
+    [Client]
+    void SetToggle(SyncDictionary<string, bool>.Operation op, string name, bool isOn)
+    {
+        Toggle t = levelSelectToggleList.SingleOrDefault(x => x.name == name);
+        if (t != null)
+        {
+            t.isOn = isOn;
+        }
     }
 }

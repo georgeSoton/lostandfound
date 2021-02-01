@@ -123,17 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &98446316 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 997248475008250687, guid: 3cf1f3f929d34894aa82062d5a3c77b4, type: 3}
-  m_PrefabInstance: {fileID: 419786208}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &117150239
 GameObject:
   m_ObjectHideFlags: 0
@@ -798,6 +787,7 @@ GameObject:
   - component: {fileID: 690006387}
   - component: {fileID: 690006383}
   - component: {fileID: 690006384}
+  - component: {fileID: 690006388}
   m_Layer: 5
   m_Name: GameOptionsPanel
   m_TagString: Untagged
@@ -852,13 +842,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8e3feec525ee424fb47b94ce84ac097, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   levelSelectToggleList:
   - {fileID: 638648541}
   - {fileID: 656800265}
   - {fileID: 1096196582}
-  - {fileID: 98446316}
-  - {fileID: 1467093513}
-  - {fileID: 1530313194}
 --- !u!114 &690006385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -923,6 +912,22 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &690006388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 690006381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 4192935009
+  serverOnly: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1 &749888242
 GameObject:
   m_ObjectHideFlags: 0
@@ -1505,17 +1510,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1390679869}
   m_CullTransparentMesh: 1
---- !u!114 &1467093513 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 997248475008250687, guid: 3cf1f3f929d34894aa82062d5a3c77b4, type: 3}
-  m_PrefabInstance: {fileID: 652676605}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1473287504
 GameObject:
   m_ObjectHideFlags: 0
@@ -1595,17 +1589,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1473287504}
   m_CullTransparentMesh: 1
---- !u!114 &1530313194 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 997248475008250687, guid: 3cf1f3f929d34894aa82062d5a3c77b4, type: 3}
-  m_PrefabInstance: {fileID: 941134016}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1536679897
 GameObject:
   m_ObjectHideFlags: 0
@@ -1637,7 +1620,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
-  syncInterval: 0.1
+  syncInterval: 0.5
   showDebugMessages: 0
 --- !u!4 &1536679899
 Transform:
@@ -1718,7 +1701,6 @@ MonoBehaviour:
   Header: {fileID: 117150241}
   PlayerCount: {fileID: 1797567268}
   startButton: {fileID: 802094033}
-  selectedSettings: {fileID: 690006384}
 --- !u!114 &1787603270
 MonoBehaviour:
   m_ObjectHideFlags: 0

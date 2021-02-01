@@ -11,7 +11,6 @@ public class SettingsManager : NetworkBehaviour
     [Tooltip("This will enable verbose debug messages in the Unity Editor console")]
     public bool showDebugMessages;
     
-    [SyncVar]
     public SyncDictionary<string, bool> levelSelectMap = new SyncDictionary<string, bool>();
 
     public static SettingsManager singleton { get; private set; }
@@ -45,15 +44,17 @@ public class SettingsManager : NetworkBehaviour
         }
 
         singleton = this;
+        levelSelectMap.Callback += OnLevelSelectChange;
+
         if (Application.isPlaying) DontDestroyOnLoad(gameObject);
 
         Debug.Log("Finish initialisation");
         return true;
     }
 
-    private void Awake()
+    void OnLevelSelectChange(SyncDictionary<string, bool>.Operation op, string key, bool toggle)
     {
-        levelSelectMap = new SyncDictionary<string, bool>();
+        Debug.Log("Change in LevelSelectMap: " + key + ", " + toggle);
     }
 
 }
