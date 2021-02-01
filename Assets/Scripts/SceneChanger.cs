@@ -75,7 +75,8 @@ public class SceneChanger : MonoBehaviour
         if (_scenes.Count<=0)
         {
             _scenes = FilterScenes(sceneList).ToList();
-            _scenes.Remove(newScene); //prevent selecting the same scene twice
+            if(_scenes.Count>1) //If Only one minigame selected do not remove it
+                _scenes.Remove(newScene); //prevent selecting the same scene twice
         }
 
         NetworkManager.singleton.ServerChangeScene(newScene);
