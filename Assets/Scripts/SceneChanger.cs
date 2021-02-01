@@ -19,7 +19,7 @@ public class SceneChanger : MonoBehaviour
     /// The scene to switch to when offline.
     /// <para>Setting this makes the NetworkManager do scene management. This scene will be switched to when a network session is completed - such as a client disconnect, or a server shutdown.</para>
     /// </summary>
-    [Scene]
+    //[Scene]
     [FormerlySerializedAs("m_ListScenes")]
     [Tooltip("A List of all Scenes holding Minigames")]
     public string[] sceneList;
@@ -61,6 +61,16 @@ public class SceneChanger : MonoBehaviour
 
     public void NewRandomScene()
     {
+        //Select random scene from selected scenes
+        List<string> randomScenes = new List<string>();
+        foreach(string scene in sceneList)
+        {
+            //Debug.Log(scene);
+            if(SettingsManager.singleton.levelSelectMap[scene] == true)
+            {
+                randomScenes.Add(scene);
+            }
+        }
         var newScene = _scenes[Random.Range(0, _scenes.Count)];
         _scenes.Remove(newScene);
         if (_scenes.Count<=0)
@@ -69,5 +79,6 @@ public class SceneChanger : MonoBehaviour
             _scenes.Remove(newScene); //prevent selecting the same scene twice
         }
         NetworkManager.singleton.ServerChangeScene(newScene);
+
     }
 }
