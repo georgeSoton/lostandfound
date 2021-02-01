@@ -44,7 +44,7 @@ public class SettingsManager : NetworkBehaviour
         }
 
         singleton = this;
-        levelSelectMap.Callback += OnLevelSelectChange;
+        //levelSelectMap.Callback += OnLevelSelectChange;
 
         if (Application.isPlaying) DontDestroyOnLoad(gameObject);
 

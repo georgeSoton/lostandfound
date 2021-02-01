@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1003649429517190917}
   - component: {fileID: 1003649429517190914}
-  - component: {fileID: 1003649429517190915}
+  - component: {fileID: 5854742031351675895}
   - component: {fileID: 1003649429517190912}
-  - component: {fileID: 1003649429517190916}
   - component: {fileID: 1003649429517190919}
   - component: {fileID: -6153163298784069389}
+  - component: {fileID: 6720977663588167778}
   m_Layer: 0
   m_Name: TimerText
   m_TagString: Untagged
@@ -36,10 +36,10 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2.3, y: 0.74}
-  m_SizeDelta: {x: 20, y: 5}
+  m_AnchorMin: {x: 0.4, y: 0.4}
+  m_AnchorMax: {x: 0.6, y: 0.6}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -100, y: -100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &1003649429517190914
 MeshRenderer:
@@ -82,7 +82,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1003649429517190915
+--- !u!114 &5854742031351675895
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,7 +91,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1003649429517190913}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -129,11 +129,11 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 6127.25
+  m_fontSize: 36
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 18
+  m_fontSizeMin: 0
   m_fontSizeMax: 10000
   m_fontStyle: 0
   m_HorizontalAlignment: 2
@@ -147,15 +147,15 @@ MonoBehaviour:
   m_charWidthMaxAdj: 0
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
+  m_overflowMode: 3
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
-  m_enableKerning: 1
+  m_enableKerning: 0
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
   m_parseCtrlCharacters: 1
-  m_isOrthographic: 0
+  m_isOrthographic: 1
   m_isCullingEnabled: 0
   m_horizontalMapping: 0
   m_verticalMapping: 0
@@ -169,10 +169,8 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
-  m_renderer: {fileID: 1003649429517190914}
-  m_maskType: 0
-  _SortingLayerID: 0
-  _SortingOrder: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &1003649429517190912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,25 +183,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80815d612f113ab4daa19b1078ca38ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  tm: {fileID: 1003649429517190915}
---- !u!114 &1003649429517190916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1003649429517190913}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 0
-  serverOnly: 0
-  m_AssetId: 
-  hasSpawned: 0
 --- !u!114 &1003649429517190919
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,9 +195,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c1ec613beecd3b45aaec0ed0d87104b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  text: {fileID: 1003649429517190912}
 --- !u!114 &-6153163298784069389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,3 +208,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   linkTmpro: {fileID: 0}
+--- !u!222 &6720977663588167778
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003649429517190913}
+  m_CullTransparentMesh: 1

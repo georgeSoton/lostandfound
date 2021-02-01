@@ -92,7 +92,7 @@ public class ColourMatchManager : NetworkBehaviour
             ScoreManager.singleton.MinigameComplete(Minigame.ColourMatch);
             Invoke(nameof(AdvanceScene), 1.5f);
         }
-        Debug.Log(dist);
+        //Debug.Log(dist);
     }
     void AdvanceScene()
     {

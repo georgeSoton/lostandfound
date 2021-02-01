@@ -1,23 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
 
-public class NetworkText : NetworkBehaviour
+public class NetworkText : MonoBehaviour
 {
-    [SerializeField]
-    TMPro.TextMeshPro tm;
-    [SyncVar(hook = nameof(ContentChangedHook))]
-    string Content;
+    TMPro.TextMeshProUGUI tm;
 
-    void ContentChangedHook(string _, string n)
+    public void Awake()
     {
-        tm.text = n;
+        tm = GetComponent<TMPro.TextMeshProUGUI>();
     }
 
-    [Server]
     public void SetText(string txt)
     {
-        Content = txt;
+        tm.text = txt;
     }
 }
