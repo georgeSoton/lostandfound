@@ -13,5 +13,4 @@ public class TimerSync : NetworkBehaviour
             text.SetText(ScoreManager.singleton.GetTimeRemaining());
         }
     }
-
 }
