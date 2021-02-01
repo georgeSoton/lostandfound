@@ -423,10 +423,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showDebugMessages: 0
   sceneList:
-  - Assets/Scenes/LetterSelect.unity
-  - Assets/Scenes/ColourMatch.unity
-  - Assets/Scenes/Maze.unity
-  - Assets/Scenes/Sorter.unity
+  - LetterSelect
+  - ColourMatch
+  - Maze
+  - Sorter
 --- !u!114 &353409953
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ using Mirror;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
+using System.Linq;
 
 public class SceneChanger : MonoBehaviour
 {
@@ -31,7 +32,6 @@ public class SceneChanger : MonoBehaviour
     private void Awake()
     {
         InitializeSingleton();
-        _scenes = new List<string>(sceneList);
     }
 
     bool InitializeSingleton()
@@ -59,25 +59,25 @@ public class SceneChanger : MonoBehaviour
         return true;
     }
 
+    public IEnumerable<string> FilterScenes(IEnumerable<string> scenes)
+    {
+        return scenes.Where(x => SettingsManager.singleton.levelSelectMap[x]);
+    }
+
     public void NewRandomScene()
     {
-        //Select random scene from selected scenes
-        List<string> randomScenes = new List<string>();
-        foreach(string scene in sceneList)
+        if(_scenes == null)//handle first initialisation (cannot call on start or awake as SettingsManager does not exsist)
         {
-            //Debug.Log(scene);
-            if(SettingsManager.singleton.levelSelectMap[scene] == true)
-            {
-                randomScenes.Add(scene);
-            }
+            _scenes = FilterScenes(sceneList).ToList();
         }
         var newScene = _scenes[Random.Range(0, _scenes.Count)];
         _scenes.Remove(newScene);
         if (_scenes.Count<=0)
         {
-            _scenes.AddRange(sceneList);
+            _scenes = FilterScenes(sceneList).ToList();
             _scenes.Remove(newScene); //prevent selecting the same scene twice
         }
+
         NetworkManager.singleton.ServerChangeScene(newScene);
 
     }
