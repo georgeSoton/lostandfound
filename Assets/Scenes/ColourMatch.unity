@@ -707,7 +707,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1003649429517190917, guid: 58c2f022d90f07a48b92ee873a5b9d83, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.00015258789
+      value: 0.00012207031
       objectReference: {fileID: 0}
     - target: {fileID: 1003649429517190917, guid: 58c2f022d90f07a48b92ee873a5b9d83, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -744,6 +744,24 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1003649429517190917, guid: 58c2f022d90f07a48b92ee873a5b9d83, type: 3}
   m_PrefabInstance: {fileID: 400398479}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &400398481 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1003649429517190913, guid: 58c2f022d90f07a48b92ee873a5b9d83, type: 3}
+  m_PrefabInstance: {fileID: 400398479}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &400398482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 400398481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61fbad0d696e5404baeb37e9f6689863, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncImg: {fileID: 1044032373}
 --- !u!1 &411631995
 GameObject:
   m_ObjectHideFlags: 0
@@ -1654,12 +1672,30 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5854742031351675895, guid: b43d205ced9b1e94abdf52b12eada0fa, type: 3}
   m_PrefabInstance: {fileID: 1015335107}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1015335109}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1015335109 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1003649429517190913, guid: b43d205ced9b1e94abdf52b12eada0fa, type: 3}
+  m_PrefabInstance: {fileID: 1015335107}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1015335110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1015335109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61fbad0d696e5404baeb37e9f6689863, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncImg: {fileID: 1044032373}
 --- !u!1 &1044032371
 GameObject:
   m_ObjectHideFlags: 0

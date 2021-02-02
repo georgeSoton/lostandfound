@@ -57,7 +57,8 @@ public class ColourMatchManager : NetworkBehaviour
         Debug.Log($"Correct answer is {CorrectAnswer}");
         var clientkeys = NetworkServer.connections.Keys.ToArray();
         playerID = NetworkServer.connections[clientkeys[Random.Range(0, clientkeys.Length)]];
-    
+
+        SyncColour();
     }
 
     [Command(ignoreAuthority=true)]
@@ -83,7 +84,6 @@ public class ColourMatchManager : NetworkBehaviour
     void TryColour(Color c)
     {
         if (taskfinished) {return;}
-        TriedColour = c;
         var dist = ColourDistance(c, CorrectAnswer);
         if (dist < RequiredAccuracy)
         {
@@ -114,9 +114,16 @@ public class ColourMatchManager : NetworkBehaviour
     
     public void SliderChanged()
     {
-        var totry = new Color(RSlider.value, GSlider.value, BSlider.value);
-        PlayerColour.color = totry;
-        TryColour(totry);
+        Color toTry = SyncColour();
+        TryColour(toTry);
+    }
+
+    public Color SyncColour()
+    {
+        var toTry = new Color(RSlider.value, GSlider.value, BSlider.value);
+        PlayerColour.color = toTry;
+        TriedColour = toTry;
+        return toTry;
     }
 
     [TargetRpc]
