@@ -6,7 +6,7 @@ using System.Linq;
 
 public class ColourMatchManager : NetworkBehaviour
 {
-    bool amPlayer = false;
+    public bool amPlayer = false;
 
     [SerializeField]
     public Camera PlayerCam;
@@ -31,6 +31,7 @@ public class ColourMatchManager : NetworkBehaviour
     Color TriedColour;
     void TriedColourChanged(Color _, Color n)
     {
+        //Debug.Log("New Colour = " + n.r + ", " + n.g + ", " + n.b);
         if (!amPlayer)
         {
             PlayerColour.color = n;
@@ -58,7 +59,9 @@ public class ColourMatchManager : NetworkBehaviour
         var clientkeys = NetworkServer.connections.Keys.ToArray();
         playerID = NetworkServer.connections[clientkeys[Random.Range(0, clientkeys.Length)]];
 
-        SyncColour();
+        var toTry = new Color(RSlider.value, GSlider.value, BSlider.value);
+        PlayerColour.color = toTry;
+        TriedColour = toTry;
     }
 
     [Command(ignoreAuthority=true)]
@@ -84,6 +87,9 @@ public class ColourMatchManager : NetworkBehaviour
     void TryColour(Color c)
     {
         if (taskfinished) {return;}
+        TriedColour = c;
+        PlayerColour.color = c;
+
         var dist = ColourDistance(c, CorrectAnswer);
         if (dist < RequiredAccuracy)
         {
@@ -114,16 +120,12 @@ public class ColourMatchManager : NetworkBehaviour
     
     public void SliderChanged()
     {
-        Color toTry = SyncColour();
-        TryColour(toTry);
-    }
-
-    public Color SyncColour()
-    {
+        //if (amPlayer) //for some reason this doesnt work, player doesnt call this apparently
+        //{
         var toTry = new Color(RSlider.value, GSlider.value, BSlider.value);
         PlayerColour.color = toTry;
-        TriedColour = toTry;
-        return toTry;
+        TryColour(toTry);
+        //}
     }
 
     [TargetRpc]
