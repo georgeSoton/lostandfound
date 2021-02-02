@@ -4,12 +4,12 @@ using UnityEngine;
 using TMPro;
 public class LinkMaxFontSize : MonoBehaviour
 {
-    public TextMeshPro linkTmpro;
-    TextMeshPro tmpro;
+    public TextMeshProUGUI linkTmpro;
+    TextMeshProUGUI tmpro;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        tmpro = GetComponent<TextMeshPro>();
+        tmpro = GetComponent<TextMeshProUGUI>();
     }
 
     // Update is called once per frame

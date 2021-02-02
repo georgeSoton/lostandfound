@@ -33,6 +33,9 @@ public class MazeManager : NetworkBehaviour
             var clientkeys = NetworkServer.connections.Keys.ToArray();
             playerID = NetworkServer.connections[clientkeys[Random.Range(0, clientkeys.Length)]];
             PlayerLocation.anchoredPosition = Mazes.TilePosition(0, Mazes.ysize - 1);
+
+            //trigger timer resume
+            ScoreManager.singleton.StartMinigame();
         }
     }
 
@@ -148,6 +151,7 @@ public class MazeManager : NetworkBehaviour
         if (playerposition[0] == Mazes.xsize - 1 && playerposition[1] == 0)
         {
             FlyInBackground();
+            ScoreManager.singleton.MinigameComplete(Minigame.Maze);
             Invoke(nameof(AdvanceScene), 1.5f);
         } else {
             MovingATM = false;

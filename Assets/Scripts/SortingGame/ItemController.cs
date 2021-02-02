@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class ItemController : MonoBehaviour,IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class ItemController : MonoBehaviour,IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     [SerializeField] private Canvas _canvas;
 
@@ -33,6 +33,11 @@ public class ItemController : MonoBehaviour,IPointerDownHandler, IBeginDragHandl
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        OnBeginDrag(eventData);
+    }
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        OnEndDrag(eventData);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -58,6 +63,7 @@ public class ItemController : MonoBehaviour,IPointerDownHandler, IBeginDragHandl
         }
         Debug.Log(diceValue);
     }
+
 
     public void OnDrag(PointerEventData eventData)
     {

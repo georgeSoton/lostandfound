@@ -1,16 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
-public class TimerSync : NetworkBehaviour
+
+public class TimerSync : MonoBehaviour
 {
-    public NetworkText text;
+    NetworkText text;
+
+    private void Awake()
+    {
+        text = GetComponent<NetworkText>();
+    }
 
     private void Update()
     {
-        if (isServer)
-        {
-            text.SetText(ScoreManager.singleton.GetTimeRemaining());
-        }
+        text.SetText(ScoreManager.singleton.GetTimeRemaining());
     }
 }

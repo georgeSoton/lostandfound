@@ -1,14 +1,16 @@
-using Mirror;
+using UnityEngine;
 
-public class ScoreSync : NetworkBehaviour
+public class ScoreSync : MonoBehaviour
 {
-    public NetworkText text;
+    NetworkText text;
+
+    private void Awake()
+    {
+        text = GetComponent<NetworkText>();
+    }
 
     private void Update()
     {
-        if (isServer)
-        {
-            text.SetText(ScoreManager.singleton.Score.ToString());
-        }
+        text.SetText(ScoreManager.singleton.Score.ToString());
     }
 }

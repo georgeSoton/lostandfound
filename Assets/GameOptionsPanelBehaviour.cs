@@ -50,7 +50,7 @@ public class GameOptionsPanelBehaviour : NetworkBehaviour
         for (int i = 0; i < levelSelectToggleList.Count; i++)
         {
             Toggle toggle = levelSelectToggleList[i]; //Required so delegate does not capture index
-            Debug.Log("Adding " + toggle.name + ", " + toggle.isOn);
+            //Debug.Log("Adding " + toggle.name + ", " + toggle.isOn);
             
             SettingsManager.singleton.levelSelectMap.Add(toggle.name, toggle.isOn);
             toggle.onValueChanged.RemoveAllListeners();
@@ -64,11 +64,11 @@ public class GameOptionsPanelBehaviour : NetworkBehaviour
     [Server]
     void ToggleValueChanged(Toggle toggle)
     {
-        Debug.Log("Setting " + toggle.name + ", " + toggle.isOn);
+        //Debug.Log("Setting " + toggle.name + ", " + toggle.isOn);
         
         SettingsManager.singleton.levelSelectMap[toggle.name] = toggle.isOn;
         //SettingsManager.singleton.levelSelectMap[name] = SettingsManager.singleton.levelSelectMap[name];
-        Debug.Log(SettingsManager.singleton.levelSelectMap[toggle.name]);
+        //Debug.Log(SettingsManager.singleton.levelSelectMap[toggle.name]);
     }
 
     [Client]

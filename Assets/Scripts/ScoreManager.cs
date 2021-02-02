@@ -7,6 +7,8 @@ public enum Minigame
 {
     LetterSelect,
     ColourMatch,
+    Maze,
+    DiceSorting,
 }
 
 public class ScoreManager : NetworkBehaviour
