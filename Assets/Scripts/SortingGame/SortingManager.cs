@@ -60,6 +60,9 @@ public class SortingManager : NetworkBehaviour
         Debug.Log($"Top answer is {_top}, Bot answer is {_bot}");
         var clientkeys = NetworkServer.connections.Keys.ToArray();
         _playerID = NetworkServer.connections[clientkeys[Random.Range(0, clientkeys.Length)]];
+
+        //Resume timer
+        ScoreManager.singleton.StartMinigame();
     }
 
     [Command(ignoreAuthority = true)]
@@ -99,6 +102,7 @@ public class SortingManager : NetworkBehaviour
         {
             _taskFinished = true;
             FlyInBackground();
+            ScoreManager.singleton.MinigameComplete(Minigame.DiceSorting);
             Invoke(nameof(AdvanceScene), 1.5f);
         }
 
