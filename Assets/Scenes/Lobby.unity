@@ -801,7 +801,6 @@ GameObject:
   - component: {fileID: 690006387}
   - component: {fileID: 690006383}
   - component: {fileID: 690006384}
-  - component: {fileID: 690006388}
   m_Layer: 5
   m_Name: GameOptionsPanel
   m_TagString: Untagged
@@ -856,8 +855,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8e3feec525ee424fb47b94ce84ac097, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
   levelSelectToggleList:
   - {fileID: 638648541}
   - {fileID: 656800265}
@@ -927,22 +924,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &690006388
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 690006381}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 4192935009
-  serverOnly: 0
-  m_AssetId: 
-  hasSpawned: 0
 --- !u!1 &749888242
 GameObject:
   m_ObjectHideFlags: 0
@@ -1678,6 +1659,7 @@ GameObject:
   - component: {fileID: 1787603268}
   - component: {fileID: 1787603270}
   - component: {fileID: 1787603269}
+  - component: {fileID: 1787603271}
   m_Layer: 0
   m_Name: LobbyManager
   m_TagString: Untagged
@@ -1732,6 +1714,21 @@ MonoBehaviour:
   serverOnly: 0
   m_AssetId: 
   hasSpawned: 0
+--- !u!114 &1787603271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1787603267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29ed8bc09ed006741a28fef5e2f80997, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  optionsPanel: {fileID: 690006384}
 --- !u!1 &1797567266
 GameObject:
   m_ObjectHideFlags: 0
