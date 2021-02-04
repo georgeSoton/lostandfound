@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TimerSync : MonoBehaviour
+public class ScoreSync : MonoBehaviour
 {
     NetworkText text;
 
@@ -11,6 +11,6 @@ public class TimerSync : MonoBehaviour
 
     private void Update()
     {
-        text.SetText(ScoreManager.singleton.GetTimeRemaining());
+        text.SetText(ScoreManager.singleton.Score.ToString());
     }
 }

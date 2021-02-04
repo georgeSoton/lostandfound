@@ -17,11 +17,12 @@ public class LobbyManager : NetworkBehaviour
     [SerializeField]
     public Button startButton;
 
+
     [SyncVar(hook = nameof(PlayerCountChanged))]
     int PlayerCountInt;
     void PlayerCountChanged(int _, int n)
     {
-        PlayerCount.text = n.ToString();
+        PlayerCount.text = "Players Connected: "+n.ToString();
     }
 
     void Start()
@@ -59,6 +60,8 @@ public class LobbyManager : NetworkBehaviour
 
     public void StartGame()
     {
+        Debug.Log("StartGameCalled: "+isServer);
+        Debug.Log(SettingsManager.singleton.levelSelectMap["Maze"]);
         if (isServer)
         {
             FlyInBackground();

@@ -5,6 +5,7 @@ using Mirror;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
+using System.Linq;
 
 public class SceneChanger : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class SceneChanger : MonoBehaviour
     /// The scene to switch to when offline.
     /// <para>Setting this makes the NetworkManager do scene management. This scene will be switched to when a network session is completed - such as a client disconnect, or a server shutdown.</para>
     /// </summary>
-    [Scene]
+    //[Scene]
     [FormerlySerializedAs("m_ListScenes")]
     [Tooltip("A List of all Scenes holding Minigames")]
     public string[] sceneList;
@@ -31,7 +32,6 @@ public class SceneChanger : MonoBehaviour
     private void Awake()
     {
         InitializeSingleton();
-        _scenes = new List<string>(sceneList);
     }
 
     bool InitializeSingleton()
@@ -59,15 +59,27 @@ public class SceneChanger : MonoBehaviour
         return true;
     }
 
+    public IEnumerable<string> FilterScenes(IEnumerable<string> scenes)
+    {
+        return scenes.Where(x => SettingsManager.singleton.levelSelectMap[x]);
+    }
+
     public void NewRandomScene()
     {
+        if(_scenes == null)//handle first initialisation (cannot call on start or awake as SettingsManager does not exsist)
+        {
+            _scenes = FilterScenes(sceneList).ToList();
+        }
         var newScene = _scenes[Random.Range(0, _scenes.Count)];
         _scenes.Remove(newScene);
         if (_scenes.Count<=0)
         {
-            _scenes.AddRange(sceneList);
-            _scenes.Remove(newScene); //prevent selecting the same scene twice
+            _scenes = FilterScenes(sceneList).ToList();
+            if(_scenes.Count>1) //If Only one minigame selected do not remove it
+                _scenes.Remove(newScene); //prevent selecting the same scene twice
         }
+
         NetworkManager.singleton.ServerChangeScene(newScene);
+
     }
 }

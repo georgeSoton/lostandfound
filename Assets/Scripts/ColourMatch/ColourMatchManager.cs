@@ -6,7 +6,7 @@ using System.Linq;
 
 public class ColourMatchManager : NetworkBehaviour
 {
-    bool amPlayer = false;
+    public bool amPlayer = false;
 
     [SerializeField]
     public Camera PlayerCam;
@@ -31,6 +31,7 @@ public class ColourMatchManager : NetworkBehaviour
     Color TriedColour;
     void TriedColourChanged(Color _, Color n)
     {
+        //Debug.Log("New Colour = " + n.r + ", " + n.g + ", " + n.b);
         if (!amPlayer)
         {
             PlayerColour.color = n;
@@ -57,7 +58,10 @@ public class ColourMatchManager : NetworkBehaviour
         Debug.Log($"Correct answer is {CorrectAnswer}");
         var clientkeys = NetworkServer.connections.Keys.ToArray();
         playerID = NetworkServer.connections[clientkeys[Random.Range(0, clientkeys.Length)]];
-    
+
+        var toTry = new Color(RSlider.value, GSlider.value, BSlider.value);
+        PlayerColour.color = toTry;
+        TriedColour = toTry;
     }
 
     [Command(ignoreAuthority=true)]
@@ -84,6 +88,8 @@ public class ColourMatchManager : NetworkBehaviour
     {
         if (taskfinished) {return;}
         TriedColour = c;
+        PlayerColour.color = c;
+
         var dist = ColourDistance(c, CorrectAnswer);
         if (dist < RequiredAccuracy)
         {
@@ -92,7 +98,7 @@ public class ColourMatchManager : NetworkBehaviour
             ScoreManager.singleton.MinigameComplete(Minigame.ColourMatch);
             Invoke(nameof(AdvanceScene), 1.5f);
         }
-        Debug.Log(dist);
+        //Debug.Log(dist);
     }
     void AdvanceScene()
     {
@@ -114,9 +120,12 @@ public class ColourMatchManager : NetworkBehaviour
     
     public void SliderChanged()
     {
-        var totry = new Color(RSlider.value, GSlider.value, BSlider.value);
-        PlayerColour.color = totry;
-        TryColour(totry);
+        //if (amPlayer) //for some reason this doesnt work, player doesnt call this apparently
+        //{
+        var toTry = new Color(RSlider.value, GSlider.value, BSlider.value);
+        PlayerColour.color = toTry;
+        TryColour(toTry);
+        //}
     }
 
     [TargetRpc]
