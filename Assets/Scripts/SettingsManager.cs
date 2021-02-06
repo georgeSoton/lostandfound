@@ -26,7 +26,7 @@ public class SettingsManager : NetworkBehaviour
         InitializeSingleton();
     }
 
-    bool InitializeSingleton()
+    public bool InitializeSingleton()
     {
         Debug.Log("Initialising Settings manager");
         if (singleton != null && singleton == this) return true;

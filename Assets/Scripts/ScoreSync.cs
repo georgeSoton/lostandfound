@@ -11,6 +11,7 @@ public class ScoreSync : MonoBehaviour
 
     private void Update()
     {
-        text.SetText(ScoreManager.singleton.Score.ToString());
+        if (ScoreManager.singleton != null)
+            text.SetText(ScoreManager.singleton.Score.ToString());
     }
 }

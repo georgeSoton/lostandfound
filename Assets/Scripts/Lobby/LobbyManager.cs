@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using UnityEngine.UI;
+using System.Linq;
 
 public class LobbyManager : NetworkBehaviour
 {
@@ -23,6 +24,15 @@ public class LobbyManager : NetworkBehaviour
     void PlayerCountChanged(int _, int n)
     {
         PlayerCount.text = "Players Connected: "+n.ToString();
+    }
+
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+        GameObject settingsManager = Instantiate(NetworkManager.singleton.spawnPrefabs.SingleOrDefault(x => x.TryGetComponent<SettingsManager>(out _)));
+        GameObject scoreManager = Instantiate(NetworkManager.singleton.spawnPrefabs.SingleOrDefault(x => x.TryGetComponent<ScoreManager>(out _)));
+        NetworkServer.Spawn(settingsManager);
+        NetworkServer.Spawn(scoreManager);
     }
 
     void Start()
