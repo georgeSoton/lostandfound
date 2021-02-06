@@ -801,6 +801,7 @@ GameObject:
   - component: {fileID: 690006387}
   - component: {fileID: 690006383}
   - component: {fileID: 690006384}
+  - component: {fileID: 690006388}
   m_Layer: 5
   m_Name: GameOptionsPanel
   m_TagString: Untagged
@@ -855,6 +856,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8e3feec525ee424fb47b94ce84ac097, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   levelSelectToggleList:
   - {fileID: 638648541}
   - {fileID: 656800265}
@@ -924,6 +927,22 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &690006388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 690006381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 2813262425
+  serverOnly: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1 &749888242
 GameObject:
   m_ObjectHideFlags: 0

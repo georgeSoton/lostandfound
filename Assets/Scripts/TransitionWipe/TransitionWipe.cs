@@ -24,13 +24,16 @@ public class TransitionWipe : MonoBehaviour
     void Start()
     {
         BGCam.backgroundColor = BGColours[BGindex];
+    }
+    public void Obscure()
+    {
+        Bot.gameObject.SetActive(true);
+        Mid.gameObject.SetActive(true);
+        Top.gameObject.SetActive(true);
 
         Bot.anchoredPosition = new Vector3(0, Bot.rect.height * -1f, 0);
         Mid.anchoredPosition = new Vector3(0, Mid.rect.height * -1f, 0);
         Top.anchoredPosition = new Vector3(0, Top.rect.height * -1f, 0);
-    }
-    public void Obscure()
-    {
         var midcolour = BGColours[(BGindex + 2) % BGColours.Count];
         var topcolour = BGColours[(BGindex + 1) % BGColours.Count];
         BGindex = (BGindex + 1) % BGColours.Count;
