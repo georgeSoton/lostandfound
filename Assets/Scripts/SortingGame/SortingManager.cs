@@ -6,26 +6,21 @@ using System.Linq;
 using TMPro;
 using UnityEngine.Serialization;
 
-public class SortingManager : NetworkBehaviour
+public class SortingManager : MinigameManagerBase
 {
-    bool _amPlayer = false;
-
-    [FormerlySerializedAs("PlayerCam")] [SerializeField] public Camera playerCam;
-    [FormerlySerializedAs("AssistantCam")] [SerializeField] public Camera assistantCam;
     [SerializeField] public List<GameObject> dice;
     [SerializeField] private List<ItemController> itemControllers;
 
     [SyncVar] int _top;
     [SyncVar] int _bot;
+
+    private bool _taskFinished = false;
+
     private SyncList<int> _diceValues = new SyncList<int>();
     [SerializeField]
     public TMPro.TextMeshProUGUI topText;
     [SerializeField]
     public TMPro.TextMeshProUGUI bottomText;
-    
-    [SerializeField]
-
-    NetworkConnection _playerID;
 
     private void Awake()
     {
@@ -36,26 +31,14 @@ public class SortingManager : NetworkBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (isServer)
-        {
-            if (!NetworkServer.connections.ContainsKey(_playerID.connectionId))
-            {
-                Invoke(nameof(AdvanceScene), 1.5f);
-            }
-        }
-    }
-
     public override void OnStartServer()
     {
+        base.OnStartServer();
         foreach (var die in dice)
         {
             var diceValue = Random.Range(1, 7);
             _diceValues.Add(diceValue);
         }
-
-        
 
         var values = new List<int>(_diceValues);
         var tVal1 = values[Random.Range(0, values.Count)];
@@ -69,20 +52,13 @@ public class SortingManager : NetworkBehaviour
         var bVal2 = values[Random.Range(0, values.Count)];
         values.Remove(bVal2);
         _bot = bVal1 + bVal2;
-        
-        Debug.Log($"Top answer is {_top}, Bot answer is {_bot}");
-        var clientkeys = NetworkServer.connections.Keys.ToArray();
-        _playerID = NetworkServer.connections[clientkeys[Random.Range(0, clientkeys.Length)]];
-
-        //Resume timer
-        ScoreManager.singleton.StartMinigame();
     }
 
 
     [Command(ignoreAuthority = true)]
-    void CmdClientReady(NetworkConnectionToClient conn = null)
+    protected override void CmdClientReady(NetworkConnectionToClient conn = null)
     {
-        if (conn.connectionId == _playerID.connectionId)
+        if (conn.connectionId == playerID.connectionId)
         {
             TargetMakePlayer(conn);
         }
@@ -92,13 +68,32 @@ public class SortingManager : NetworkBehaviour
         }
     }
 
-    public override void OnStartClient()
+    [TargetRpc]
+    protected override void TargetMakePlayer(NetworkConnection conn)
     {
-        base.OnStartClient();
-        CmdClientReady();
+        base.TargetMakePlayer(conn);
+        SetDiceValues(_diceValues.ToList());
     }
 
-    private bool _taskFinished = false;
+    private void SetDiceValues(List<int> diceValues)
+    {
+        if (diceValues.Count == itemControllers.Count)
+        {
+            for (int i = 0; i < itemControllers.Count; i++)
+            {
+                //Debug.Log(i + " " + diceValues[i]);
+                itemControllers[i].SetValue(diceValues[i]);
+            }
+        }
+    }
+
+    [TargetRpc]
+    private void TargetMakeAssistant(NetworkConnection conn, int top, int bot, List<GameObject> dice)
+    {
+        base.TargetMakeAssistant(conn);
+        topText.text = top.ToString();
+        bottomText.text = bot.ToString();
+    }
 
     [Command(ignoreAuthority = true)]
     private void TrySolution(int sentTop, int sentBot)
@@ -115,23 +110,10 @@ public class SortingManager : NetworkBehaviour
         if (sentTop == _top && sentBot == _bot)
         {
             _taskFinished = true;
-            FlyInBackground();
-            ScoreManager.singleton.MinigameComplete(Minigame.DiceSorting);
-            Invoke(nameof(AdvanceScene), 1.5f);
+            EndMinigame(true);
         }
 
         Debug.Log("Top:" + _top + "\nBot:" + _bot);
-    }
-
-    private void AdvanceScene()
-    {
-        SceneChanger.singleton.NewRandomScene();
-    }
-
-    [ClientRpc]
-    private void FlyInBackground()
-    {
-        FindObjectOfType<TransitionWipe>().Obscure();
     }
 
     public void ValidateSolution()
@@ -155,41 +137,5 @@ public class SortingManager : NetworkBehaviour
         TrySolution(topSolution, botSolution);
     }
 
-    [TargetRpc]
-    private void TargetMakePlayer(NetworkConnection conn)
-    {
-        Debug.Log("Player");
-        playerCam.gameObject.SetActive(true);
-        playerCam.enabled = true;
-        assistantCam.gameObject.SetActive(false);
-        assistantCam.enabled = false;
-        _amPlayer = true;
-        SetDiceValues(_diceValues.ToList());
-    }
-
-    private void SetDiceValues(List<int> diceValues)
-    {
-        if(diceValues.Count == itemControllers.Count) 
-        {
-            for (int i = 0; i < itemControllers.Count; i++)
-            {
-                //Debug.Log(i + " " + diceValues[i]);
-                itemControllers[i].SetValue(diceValues[i]);
-            }
-        }
-    }
-
-    [TargetRpc]
-    private void TargetMakeAssistant(NetworkConnection conn, int top, int bot, List<GameObject> dice)
-    {
-        Debug.Log("Assistant");
-        playerCam.gameObject.SetActive(false);
-        playerCam.enabled = false;
-        assistantCam.gameObject.SetActive(true);
-        assistantCam.enabled = true;
-        _amPlayer = false;
-        topText.text = top.ToString();
-        bottomText.text = bot.ToString();
-        
-    }
+    
 }

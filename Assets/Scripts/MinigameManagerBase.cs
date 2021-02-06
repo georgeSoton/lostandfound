@@ -12,7 +12,7 @@ public abstract class MinigameManagerBase : NetworkBehaviour
     [SerializeField] public List<SelectionTile> PlayerTiles;
     [SerializeField] public SelectionTile AssistantClue;
 
-    NetworkConnection playerID;
+    protected NetworkConnection playerID;
 
     protected bool amPlayer = false;
     protected Minigame minigameType = Minigame.None;
@@ -92,7 +92,7 @@ public abstract class MinigameManagerBase : NetworkBehaviour
             ScoreManager.singleton.MinigameComplete(minigameType);
             Invoke(nameof(AdvanceScene), 1.5f);
         }
-        else //TimeOut
+        else //TimeOut or player disconnect
         {
             Debug.LogWarning("TODO: NOT YET IMPLEMENTED");
         }
