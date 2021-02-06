@@ -11,6 +11,7 @@ public class TimerSync : MonoBehaviour
 
     private void Update()
     {
-        text.SetText(ScoreManager.singleton.GetTimeRemaining());
+        if(ScoreManager.singleton !=null)
+            text.SetText(ScoreManager.singleton.GetTimeRemaining());
     }
 }

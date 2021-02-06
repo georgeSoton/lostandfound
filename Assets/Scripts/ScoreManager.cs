@@ -50,7 +50,7 @@ public class ScoreManager : NetworkBehaviour
         InitializeSingleton();
     }
 
-    bool InitializeSingleton()
+    public bool InitializeSingleton()
     {
         Debug.Log("Initialising Score manager");
         if (singleton != null && singleton == this) return true;
