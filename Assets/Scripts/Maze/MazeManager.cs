@@ -4,11 +4,8 @@ using UnityEngine;
 using Mirror;
 using System.Linq;
 using DG.Tweening;
-public class MazeManager : NetworkBehaviour
+public class MazeManager : MinigameManagerBase
 {
-    [SerializeField] public Camera PlayerCam;
-    [SerializeField] public Camera AssistantCam;
-
     [SerializeField]
     public GameObject OpenTile;
     [SerializeField]
@@ -21,32 +18,27 @@ public class MazeManager : NetworkBehaviour
     public RectTransform PlayerLocation;
     //Bottom left corner start
     int[] playerposition = { 0, Mazes.ysize - 1 };
-
     int ChosenMaze;
-    NetworkConnection playerID;
+
+    enum MoveDirection
+    {
+        U, D, L, R
+    }
+
+    bool MovingATM = false;
+    bool AxisReadyForNewMovement = true;
 
     void Start()
     {
         if (isServer)
         {
-            ChosenMaze = Random.Range(0, Mazes.mazes.GetLength(0));
-            var clientkeys = NetworkServer.connections.Keys.ToArray();
-            playerID = NetworkServer.connections[clientkeys[Random.Range(0, clientkeys.Length)]];
+            ChosenMaze = Random.Range(0, Mazes.mazes.GetLength(0));  
             PlayerLocation.anchoredPosition = Mazes.TilePosition(0, Mazes.ysize - 1);
-
-            //trigger timer resume
-            ScoreManager.singleton.StartMinigame();
         }
     }
 
-    public override void OnStartClient()
-    {
-        base.OnStartClient();
-        ClientReady();
-    }
-
     [Command(ignoreAuthority = true)]
-    void ClientReady(NetworkConnectionToClient conn = null)
+    protected override void CmdClientReady(NetworkConnectionToClient conn = null)
     {
         if (conn.connectionId == playerID.connectionId)
         {
@@ -57,6 +49,7 @@ public class MazeManager : NetworkBehaviour
             TargetMakeAssistant(conn, ChosenMaze);
         }
     }
+
     void AddMazeObjects(int maze)
     {
         for (var x = 0; x < Mazes.xsize; x++)
@@ -85,31 +78,12 @@ public class MazeManager : NetworkBehaviour
     }
 
     [TargetRpc]
-    void TargetMakePlayer(NetworkConnection conn)
-    {
-        Debug.Log("Player");
-        PlayerCam.gameObject.SetActive(true);
-        PlayerCam.enabled = true;
-        AssistantCam.gameObject.SetActive(false);
-        AssistantCam.enabled = false;
-    }
-    [TargetRpc]
     void TargetMakeAssistant(NetworkConnection conn, int maze)
     {
-        Debug.Log("Assistant");
-        PlayerCam.gameObject.SetActive(true);
-        PlayerCam.enabled = true;
-        AssistantCam.gameObject.SetActive(true);
-        AssistantCam.enabled = true;
+        base.TargetMakeAssistant(conn);
         AddMazeObjects(maze);
     }
 
-    enum MoveDirection
-    {
-        U, D, L, R
-    }
-
-    bool MovingATM = false;
     [Command(ignoreAuthority = true)]
     void TryMove(MoveDirection dir, NetworkConnectionToClient conn = null)
     {
@@ -159,7 +133,6 @@ public class MazeManager : NetworkBehaviour
         MovingATM = true;
         PlayerLocation.DOShakeRotation(0.5f, strength: new Vector3(0, 0, 10)).Play();
         PlayerLocation.DOShakeAnchorPos(0.5f, strength: 10).OnComplete(() => FinishedMoving()).Play();
-
     }
 
     [Server]
@@ -167,26 +140,14 @@ public class MazeManager : NetworkBehaviour
     {
         if (playerposition[0] == Mazes.xsize - 1 && playerposition[1] == 0)
         {
-            FlyInBackground();
-            ScoreManager.singleton.MinigameComplete(Minigame.Maze);
-            Invoke(nameof(AdvanceScene), 1.5f);
+            EndMinigame(true);
         }
         else
         {
             MovingATM = false;
         }
     }
-    void AdvanceScene()
-    {
-        SceneChanger.singleton.NewRandomScene();
-    }
 
-    [ClientRpc]
-    void FlyInBackground()
-    {
-        FindObjectOfType<TransitionWipe>().Obscure();
-    }
-    bool AxisReadyForNewMovement = true;
     void Update()
     {
         if (isClient)

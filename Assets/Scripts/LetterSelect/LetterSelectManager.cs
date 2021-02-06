@@ -6,10 +6,8 @@ using Mirror;
 using System.Linq;
 using Random = UnityEngine.Random;
 
-public class LetterSelectManager : NetworkBehaviour
+public class LetterSelectManager : MinigameManagerBase
 {
-    [SerializeField] public Camera PlayerCam;
-    [SerializeField] public Camera AssistantCam;
     [SerializeField] public List<SelectionTile> PlayerTiles;
     [SerializeField] public SelectionTile AssistantClue;
 
@@ -21,13 +19,15 @@ public class LetterSelectManager : NetworkBehaviour
         new string[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},
         new string[] {"!", "?", "@", "%", "£", "$", "*", ":", ";", "(", "{", "<", "&", "\"","#", "+", "-", "=", "^"}
     };
+
     string CorrectAnswer = null;
 
-    NetworkConnection playerID;
+    bool subbedToTiles = false;
+    bool TaskComplete = false;
 
     public override void OnStartServer()
     {
-        ScoreManager.singleton.StartMinigame();
+        base.OnStartServer();
         
         var localalpha = new List<string>(Alphabets[Random.Range(0, Alphabets.Count)]);
         CorrectAnswer = localalpha[Random.Range(0, localalpha.Count)];
@@ -42,42 +42,7 @@ public class LetterSelectManager : NetworkBehaviour
         }
 
         PlayerTiles[Random.Range(0, PlayerTiles.Count)].SetText(CorrectAnswer);
-
-        var clientkeys = NetworkServer.connections.Keys.ToArray();
-        playerID = NetworkServer.connections[clientkeys[Random.Range(0, clientkeys.Length)]];
     }
-
-    private void Update()
-    {
-        if (isServer)
-        {
-            if (!NetworkServer.connections.ContainsKey(playerID.connectionId))
-            {
-                Invoke(nameof(AdvanceScene), 1.5f);
-            }
-        }
-    }
-
-    [Command(ignoreAuthority = true)]
-    void CmdClientReady(NetworkConnectionToClient conn = null)
-    {
-        if (conn.connectionId == playerID.connectionId)
-        {
-            TargetMakePlayer(conn);
-        }
-        else
-        {
-            TargetMakeAssistant(conn);
-        }
-    }
-
-    public override void OnStartClient()
-    {
-        base.OnStartClient();
-        CmdClientReady();
-    }
-
-    bool subbedToTiles = false;
 
     void SubToTiles()
     {
@@ -108,7 +73,7 @@ public class LetterSelectManager : NetworkBehaviour
         CmdPlayerChose(s);
     }
 
-    bool TaskComplete = false;
+    
     [Command(ignoreAuthority = true)]
     void CmdPlayerChose(string s)
     {
@@ -117,45 +82,25 @@ public class LetterSelectManager : NetworkBehaviour
         {
             Debug.Log("Correct");
             TaskComplete = true;
-            FlyInBackground();
-            ScoreManager.singleton.MinigameComplete(Minigame.LetterSelect);
-            Invoke(nameof(AdvanceScene), 1.5f);
+            EndMinigame(true);
         }
         else
         {
             Debug.Log("Incorrect");
         }
     }
-    void AdvanceScene()
-    {
-        SceneChanger.singleton.NewRandomScene();
-    }
-
-    [ClientRpc]
-    void FlyInBackground()
-    {
-        FindObjectOfType<TransitionWipe>().Obscure();
-    }
 
     [TargetRpc]
-    void TargetMakePlayer(NetworkConnection conn)
+    protected override void TargetMakePlayer(NetworkConnection conn)
     {
-        Debug.Log("Player");
-        PlayerCam.gameObject.SetActive(true);
-        PlayerCam.enabled = true;
-        AssistantCam.gameObject.SetActive(false);
-        AssistantCam.enabled = false;
+        base.TargetMakePlayer(conn);
         SubToTiles();
     }
 
     [TargetRpc]
-    void TargetMakeAssistant(NetworkConnection conn)
+    protected override void TargetMakeAssistant(NetworkConnection conn)
     {
-        Debug.Log("Assistant");
-        PlayerCam.gameObject.SetActive(false);
-        PlayerCam.enabled = false;
-        AssistantCam.gameObject.SetActive(true);
-        AssistantCam.enabled = true;
+        base.TargetMakeAssistant(conn);
         UnsubFromTiles();
     }
 
