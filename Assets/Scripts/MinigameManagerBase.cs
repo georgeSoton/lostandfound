@@ -6,11 +6,8 @@ using Mirror;
 
 public abstract class MinigameManagerBase : NetworkBehaviour
 {
-    
     [SerializeField] public Camera PlayerCam;
     [SerializeField] public Camera AssistantCam;
-    [SerializeField] public List<SelectionTile> PlayerTiles;
-    [SerializeField] public SelectionTile AssistantClue;
 
     protected NetworkConnection playerID;
 
