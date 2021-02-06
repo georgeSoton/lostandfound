@@ -12,10 +12,12 @@ public class SortingManager : NetworkBehaviour
 
     [FormerlySerializedAs("PlayerCam")] [SerializeField] public Camera playerCam;
     [FormerlySerializedAs("AssistantCam")] [SerializeField] public Camera assistantCam;
-    [SyncVar][SerializeField] public List<GameObject> dice;
+    [SerializeField] public List<GameObject> dice;
+    [SerializeField] private List<ItemController> itemControllers;
+
     [SyncVar] int _top;
     [SyncVar] int _bot;
-    [SyncVar] private List<int> _diceValues;
+    private SyncList<int> _diceValues = new SyncList<int>();
     [SerializeField]
     public TMPro.TextMeshProUGUI topText;
     [SerializeField]
@@ -24,6 +26,15 @@ public class SortingManager : NetworkBehaviour
     [SerializeField]
 
     NetworkConnection _playerID;
+
+    private void Awake()
+    {
+        itemControllers = new List<ItemController>();
+        foreach(var die in dice)
+        {
+            itemControllers.Add(die.GetComponent<ItemController>());
+        }
+    }
 
     private void Update()
     {
@@ -38,12 +49,14 @@ public class SortingManager : NetworkBehaviour
 
     public override void OnStartServer()
     {
-        _diceValues = new List<int>();
         foreach (var die in dice)
         {
             var diceValue = Random.Range(1, 7);
             _diceValues.Add(diceValue);
         }
+
+        
+
         var values = new List<int>(_diceValues);
         var tVal1 = values[Random.Range(0, values.Count)];
         values.Remove(tVal1);
@@ -64,6 +77,7 @@ public class SortingManager : NetworkBehaviour
         //Resume timer
         ScoreManager.singleton.StartMinigame();
     }
+
 
     [Command(ignoreAuthority = true)]
     void CmdClientReady(NetworkConnectionToClient conn = null)
@@ -150,10 +164,18 @@ public class SortingManager : NetworkBehaviour
         assistantCam.gameObject.SetActive(false);
         assistantCam.enabled = false;
         _amPlayer = true;
-        for(int i =0;i<dice.Count;i++)
+        SetDiceValues(_diceValues.ToList());
+    }
+
+    private void SetDiceValues(List<int> diceValues)
+    {
+        if(diceValues.Count == itemControllers.Count) 
         {
-            Debug.Log(i+" "+_diceValues[i]);
-            dice[i].GetComponent<ItemController>().SetValue(_diceValues[i]);
+            for (int i = 0; i < itemControllers.Count; i++)
+            {
+                //Debug.Log(i + " " + diceValues[i]);
+                itemControllers[i].SetValue(diceValues[i]);
+            }
         }
     }
 
