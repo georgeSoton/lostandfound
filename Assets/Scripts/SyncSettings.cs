@@ -24,4 +24,12 @@ public class SyncSettings : NetworkBehaviour
             }
         }
     }
+
+    public override void OnStartClient()
+    {
+        foreach (var p in SettingsManager.singleton.levelSelectMap)
+        {
+            optionsPanel.SetToggle(SyncDictionary<string, bool>.Operation.OP_SET, p.Key, p.Value);
+        }
+    }
 }

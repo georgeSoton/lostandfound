@@ -10,19 +10,12 @@ public class SettingsManager : NetworkBehaviour
     [FormerlySerializedAs("m_ShowDebugMessages")]
     [Tooltip("This will enable verbose debug messages in the Unity Editor console")]
     public bool showDebugMessages;
-    
+
     public SyncDictionary<string, bool> levelSelectMap = new SyncDictionary<string, bool>();
 
     public static SettingsManager singleton { get; private set; }
-
-    public override void OnStartClient()
+    void Awake()
     {
-        base.OnStartClient();
-        InitializeSingleton();
-    }
-    public override void OnStartServer()
-    {
-        base.OnStartServer();
         InitializeSingleton();
     }
 
@@ -45,9 +38,7 @@ public class SettingsManager : NetworkBehaviour
 
         singleton = this;
         //levelSelectMap.Callback += OnLevelSelectChange;
-
-        if (Application.isPlaying) DontDestroyOnLoad(gameObject);
-
+        DontDestroyOnLoad(this);
         Debug.Log("Finish initialisation");
         return true;
     }
