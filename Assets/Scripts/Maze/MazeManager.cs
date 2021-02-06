@@ -20,7 +20,7 @@ public class MazeManager : NetworkBehaviour
     [SerializeField]
     public RectTransform PlayerLocation;
     //Bottom left corner start
-    int[] playerposition = { 0, Mazes.ysize - 1};
+    int[] playerposition = { 0, Mazes.ysize - 1 };
 
     int ChosenMaze;
     NetworkConnection playerID;
@@ -45,7 +45,7 @@ public class MazeManager : NetworkBehaviour
         ClientReady();
     }
 
-    [Command(ignoreAuthority=true)]
+    [Command(ignoreAuthority = true)]
     void ClientReady(NetworkConnectionToClient conn = null)
     {
         if (conn.connectionId == playerID.connectionId)
@@ -68,14 +68,18 @@ public class MazeManager : NetworkBehaviour
         }
 
         AddTile(EndObject, Mazes.xsize - 1, 0);
+
+        var canvasheight = ((RectTransform)MazeCanvas.transform).rect.height;
+        var mazeheight = 150 * Mazes.ysize;
+        ((RectTransform)MazeCanvas.transform).localScale = (canvasheight / mazeheight) * Vector3.one;
     }
     void AddTile(GameObject tile, int x, int y)
     {
         var instance = Instantiate(tile);
         instance.transform.SetParent(MazeCanvas.transform, false);
         var rt = (RectTransform)instance.transform;
-        rt.anchorMin = new Vector2(0.5f, 1f);
-        rt.anchorMax = new Vector2(0.5f, 1f);
+        rt.anchorMin = new Vector2(0.5f, 0.5f);
+        rt.anchorMax = new Vector2(0.5f, 0.5f);
         rt.localScale = Vector3.one;
         rt.anchoredPosition = Mazes.TilePosition(x, y);
     }
@@ -106,11 +110,11 @@ public class MazeManager : NetworkBehaviour
     }
 
     bool MovingATM = false;
-    [Command(ignoreAuthority=true)]
+    [Command(ignoreAuthority = true)]
     void TryMove(MoveDirection dir, NetworkConnectionToClient conn = null)
     {
-        if (MovingATM) {return;}
-        if (conn.connectionId != playerID.connectionId) {return;}
+        if (MovingATM) { return; }
+        if (conn.connectionId != playerID.connectionId) { return; }
         int xdif = 0;
         int ydif = 0;
         switch (dir)
@@ -136,13 +140,15 @@ public class MazeManager : NetworkBehaviour
         }
         int newx = playerposition[0] + xdif;
         int newy = playerposition[1] + ydif;
-        if ((newx < 0) || (newx >= Mazes.xsize) || (newy < 0) || (newy >= Mazes.ysize) ) {FailShake(); return;}
-        if (Mazes.mazes[ChosenMaze, newy, newx]) {
+        if ((newx < 0) || (newx >= Mazes.xsize) || (newy < 0) || (newy >= Mazes.ysize)) { FailShake(); return; }
+        if (Mazes.mazes[ChosenMaze, newy, newx])
+        {
             var newloc = Mazes.TilePosition(newx, newy);
-            playerposition = new int[] {newx, newy};
-            MovingATM=true;
-            PlayerLocation.DOAnchorPos(newloc, 0.4f).OnComplete(()=>FinishedMoving()).Play();
-        } else
+            playerposition = new int[] { newx, newy };
+            MovingATM = true;
+            PlayerLocation.DOAnchorPos(newloc, 0.4f).OnComplete(() => FinishedMoving()).Play();
+        }
+        else
         {
             FailShake(); return;
         }
@@ -150,10 +156,10 @@ public class MazeManager : NetworkBehaviour
 
     void FailShake()
     {
-        MovingATM=true;
-        PlayerLocation.DOShakeRotation(0.5f, strength:new Vector3(0,0,10)).Play();
-        PlayerLocation.DOShakeAnchorPos(0.5f, strength: 10).OnComplete(()=>FinishedMoving()).Play();
-        
+        MovingATM = true;
+        PlayerLocation.DOShakeRotation(0.5f, strength: new Vector3(0, 0, 10)).Play();
+        PlayerLocation.DOShakeAnchorPos(0.5f, strength: 10).OnComplete(() => FinishedMoving()).Play();
+
     }
 
     [Server]
@@ -164,7 +170,9 @@ public class MazeManager : NetworkBehaviour
             FlyInBackground();
             ScoreManager.singleton.MinigameComplete(Minigame.Maze);
             Invoke(nameof(AdvanceScene), 1.5f);
-        } else {
+        }
+        else
+        {
             MovingATM = false;
         }
     }
@@ -209,9 +217,10 @@ public class MazeManager : NetworkBehaviour
                     TryMove(MoveDirection.L);
                     return;
                 }
-            } else
+            }
+            else
             {
-                if (Input.GetAxis("Vertical") == 0 && Input.GetAxis("Horizontal") == 0) {AxisReadyForNewMovement = true;}
+                if (Input.GetAxis("Vertical") == 0 && Input.GetAxis("Horizontal") == 0) { AxisReadyForNewMovement = true; }
             }
         }
     }
