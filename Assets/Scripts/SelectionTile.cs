@@ -7,8 +7,9 @@ public class SelectionTile : NetworkBehaviour
 {
     [SerializeField]
     TMPro.TextMeshProUGUI tm;
-    [SyncVar(hook=nameof(ContentChangedHook))]
+    [SyncVar(hook = nameof(ContentChangedHook))]
     string Content;
+    public BoxCollider2D Collider;
     Vector3 targetscale;
     void Awake()
     {
@@ -33,8 +34,13 @@ public class SelectionTile : NetworkBehaviour
 
     void OnMouseDown()
     {
-        if (Clicked!=null) {Clicked.Invoke(Content);}
+        if (Clicked != null) { Clicked.Invoke(Content); }
     }
 
     public event System.Action<string> Clicked;
+
+    void Update()
+    {
+        Collider.size = new Vector2(((RectTransform)transform).rect.width, ((RectTransform)transform).rect.height);
+    }
 }

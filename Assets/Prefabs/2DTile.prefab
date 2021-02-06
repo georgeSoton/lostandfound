@@ -110,6 +110,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   tm: {fileID: 2536293376487163468}
+  Collider: {fileID: 8481753544620098392}
 --- !u!61 &8481753544620098392
 BoxCollider2D:
   m_ObjectHideFlags: 0
