@@ -10,7 +10,7 @@ public abstract class MinigameManagerBase : NetworkBehaviour
     [SerializeField] public Camera AssistantCam;
 
     protected NetworkConnection playerID;
-
+    [SerializeField]
     protected bool amPlayer = false;
     protected Minigame minigameType = Minigame.None;
 
@@ -71,7 +71,7 @@ public abstract class MinigameManagerBase : NetworkBehaviour
         PlayerCam.enabled = false;
         AssistantCam.gameObject.SetActive(true);
         AssistantCam.enabled = true;
-        amPlayer = true;
+        amPlayer = false;
     }
 
     [ClientRpc]
