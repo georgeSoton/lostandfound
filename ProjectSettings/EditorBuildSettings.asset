@@ -24,6 +24,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Sorter.unity
     guid: 0297191311a18b448a3ccdcb8dc9eee3
   - enabled: 1
+    path: Assets/Scenes/SplashSelectSame.unity
+    guid: 6a7512ee8471c5b41965eee10294cfcf
+  - enabled: 1
     path: Assets/Scenes/SelectSame.unity
     guid: b9ac174e2c8d83c46b07b47a1ab626b3
   m_configObjects:

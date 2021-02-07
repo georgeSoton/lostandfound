@@ -428,7 +428,7 @@ MonoBehaviour:
   - ColourMatch
   - Maze
   - Sorter
-  - SelectSame
+  - SplashSelectSame
 --- !u!1 &487685271
 GameObject:
   m_ObjectHideFlags: 0
