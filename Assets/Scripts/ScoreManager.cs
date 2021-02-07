@@ -9,6 +9,7 @@ public enum Minigame
     ColourMatch,
     Maze,
     DiceSorting,
+    None,
 }
 
 public class ScoreManager : NetworkBehaviour

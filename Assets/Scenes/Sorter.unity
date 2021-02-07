@@ -1175,7 +1175,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 64
+  m_fontSize: 64.25
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1696,13 +1696,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  playerCam: {fileID: 1947103700}
-  assistantCam: {fileID: 1164182048}
+  PlayerCam: {fileID: 1947103700}
+  AssistantCam: {fileID: 1164182048}
   dice:
   - {fileID: 77749849}
   - {fileID: 691381488}
   - {fileID: 1127544710}
   - {fileID: 1123872059}
+  itemControllers: []
   topText: {fileID: 840321322}
   bottomText: {fileID: 1844746124}
 --- !u!114 &1553907965
@@ -1999,7 +2000,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 64
+  m_fontSize: 64.25
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
