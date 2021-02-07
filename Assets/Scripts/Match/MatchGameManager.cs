@@ -144,7 +144,7 @@ public class MatchGameManager : NetworkBehaviour
         SceneChanger.singleton.NewRandomScene();
     }
 
-    static void ShuffleList<T>(List<T> inlist)
+    static void ShuffleList<T>(IList<T> inlist)
     {
         for (int i = 0; i < inlist.Count; i++)
         {
