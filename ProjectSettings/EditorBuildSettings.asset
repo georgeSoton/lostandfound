@@ -23,5 +23,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Sorter.unity
     guid: 0297191311a18b448a3ccdcb8dc9eee3
+  - enabled: 1
+    path: Assets/Scenes/SelectSame.unity
+    guid: b9ac174e2c8d83c46b07b47a1ab626b3
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: e12ddc2899b5cf44bbc4410f9cfc4655, type: 2}

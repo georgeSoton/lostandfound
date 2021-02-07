@@ -11,15 +11,6 @@ public class LetterSelectManager : MinigameManagerBase
     [SerializeField] public List<SelectionTile> PlayerTiles;
     [SerializeField] public SelectionTile AssistantClue;
 
-    List<String[]> Alphabets = new List<String[]>
-    {
-        new string[] {":)", ":(", ";)", ";P", ":o", ">:(", ":c", "¬_¬", "uwu", ":'(", ":')", ">_<", "O-o", ":D", ">:D", ":S", ":X", ":|", ":/", ";*", "xD", "=3", "( ͡° ͜ʖ ͡°)", "T-T"},
-        new string[] {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V",
-        "W", "X", "Y", "Z"},
-        new string[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},
-        new string[] {"!", "?", "@", "%", "£", "$", "*", ":", ";", "(", "{", "<", "&", "\"","#", "+", "-", "=", "^"}
-    };
-
     string CorrectAnswer = null;
 
     bool subbedToTiles = false;
@@ -28,8 +19,8 @@ public class LetterSelectManager : MinigameManagerBase
     public override void OnStartServer()
     {
         base.OnStartServer();
-        
-        var localalpha = new List<string>(Alphabets[Random.Range(0, Alphabets.Count)]);
+
+        var localalpha = new List<string>(Alphabets.Choices[Random.Range(0, Alphabets.Choices.Count)]);
         CorrectAnswer = localalpha[Random.Range(0, localalpha.Count)];
         Debug.Log($"Correct answer is {CorrectAnswer}");
         localalpha.Remove(CorrectAnswer);
@@ -73,11 +64,11 @@ public class LetterSelectManager : MinigameManagerBase
         CmdPlayerChose(s);
     }
 
-    
+
     [Command(ignoreAuthority = true)]
     void CmdPlayerChose(string s)
     {
-        if (TaskComplete){return;}
+        if (TaskComplete) { return; }
         if (s == CorrectAnswer)
         {
             Debug.Log("Correct");
