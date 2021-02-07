@@ -25,7 +25,7 @@ public class SortingManager : MinigameManagerBase
     private void Awake()
     {
         itemControllers = new List<ItemController>();
-        foreach(var die in dice)
+        foreach (var die in dice)
         {
             itemControllers.Add(die.GetComponent<ItemController>());
         }
@@ -46,7 +46,7 @@ public class SortingManager : MinigameManagerBase
         var tVal2 = values[Random.Range(0, values.Count)];
         values.Remove(tVal2);
         _top = tVal1 + tVal2;
-        
+
         var bVal1 = values[Random.Range(0, values.Count)];
         values.Remove(bVal1);
         var bVal2 = values[Random.Range(0, values.Count)];
@@ -102,10 +102,10 @@ public class SortingManager : MinigameManagerBase
         {
             return;
         }
-        
-        Debug.Log(sentTop+" "+sentBot);
-        Debug.Log(_top+" "+_bot);
-        
+
+        Debug.Log(sentTop + " " + sentBot);
+        Debug.Log(_top + " " + _bot);
+
 
         if (sentTop == _top && sentBot == _bot)
         {
@@ -118,7 +118,7 @@ public class SortingManager : MinigameManagerBase
 
     public void ValidateSolution()
     {
-        var topSolution = 0; 
+        var topSolution = 0;
         var botSolution = 0;
 
         foreach (var dieData in dice.Select(die => die.GetComponent<ItemController>()))
@@ -137,5 +137,5 @@ public class SortingManager : MinigameManagerBase
         TrySolution(topSolution, botSolution);
     }
 
-    
+
 }

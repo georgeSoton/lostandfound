@@ -32,7 +32,7 @@ public class MazeManager : MinigameManagerBase
     {
         if (isServer)
         {
-            ChosenMaze = Random.Range(0, Mazes.mazes.GetLength(0));  
+            ChosenMaze = Random.Range(0, Mazes.mazes.GetLength(0));
             PlayerLocation.anchoredPosition = Mazes.TilePosition(0, Mazes.ysize - 1);
         }
     }
@@ -81,6 +81,8 @@ public class MazeManager : MinigameManagerBase
     void TargetMakeAssistant(NetworkConnection conn, int maze)
     {
         base.TargetMakeAssistant(conn);
+        PlayerCam.gameObject.SetActive(true);
+        PlayerCam.enabled = true;
         AddMazeObjects(maze);
     }
 
