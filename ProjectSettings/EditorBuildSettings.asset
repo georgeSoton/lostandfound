@@ -21,6 +21,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Maze.unity
     guid: 3a549fa4373888e469052f362fa665c7
   - enabled: 1
+    path: Assets/Scenes/SplashLetterSelect.unity
+    guid: 3357c4467dae59748b8af72cfdc58e0d
+  - enabled: 1
     path: Assets/Scenes/Sorter.unity
     guid: 0297191311a18b448a3ccdcb8dc9eee3
   - enabled: 1
@@ -29,5 +32,14 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SelectSame.unity
     guid: b9ac174e2c8d83c46b07b47a1ab626b3
+  - enabled: 1
+    path: Assets/Scenes/SplashMaze.unity
+    guid: 36dee242e9cad604b96dba61e8b80370
+  - enabled: 1
+    path: Assets/Scenes/SplashSorter.unity
+    guid: 0fe1ffa5943a47143aa640ff280c65b4
+  - enabled: 1
+    path: Assets/Scenes/SplashColourMatch.unity
+    guid: 914b33778f907e34d9223355b6764ca2
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: e12ddc2899b5cf44bbc4410f9cfc4655, type: 2}

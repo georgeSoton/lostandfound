@@ -18,15 +18,15 @@ public class SplashManager : NetworkBehaviour
     [Scene]
     [SerializeField] string NextScene;
 
-    void Start()
+    void Awake()
     {
         foreach (var el in FromLeftElements)
         {
-            el.gameObject.SetActive(false);
+            el.GetComponent<TMPro.TextMeshProUGUI>().enabled = false;
         }
         foreach (var el in FromRightElements)
         {
-            el.gameObject.SetActive(false);
+            el.GetComponent<TMPro.TextMeshProUGUI>().enabled = false;
         }
     }
 
@@ -37,6 +37,7 @@ public class SplashManager : NetworkBehaviour
 
     public override void OnStartClient()
     {
+        Debug.Log("SplashManager client start");
         foreach (var el in FromLeftElements)
         {
             TweenInOut(el, LeftFromTarget, RightFromTarget);
@@ -45,12 +46,11 @@ public class SplashManager : NetworkBehaviour
         {
             TweenInOut(el, RightFromTarget, LeftFromTarget);
         }
-        Invoke(nameof(AdvanceScene), inTimeMax + midTimeMax + outtimeMax);
     }
 
     void TweenInOut(RectTransform el, RectTransform from, RectTransform to)
     {
-        el.gameObject.SetActive(true);
+        el.GetComponent<TMPro.TextMeshProUGUI>().enabled = true;
         var origpos = el.localPosition.x;
         el.localPosition = new Vector3(from.localPosition.x, el.localPosition.y, el.localPosition.z);
 
@@ -63,7 +63,6 @@ public class SplashManager : NetworkBehaviour
     [Server]
     void AdvanceScene()
     {
-        Debug.Log("Advancing Scene lets gooooooooooooooo");
         NetworkManager.singleton.ServerChangeScene(NextScene);
     }
 }

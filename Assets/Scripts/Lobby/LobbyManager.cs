@@ -23,7 +23,7 @@ public class LobbyManager : NetworkBehaviour
     int PlayerCountInt;
     void PlayerCountChanged(int _, int n)
     {
-        PlayerCount.text = "Players Connected: "+n.ToString();
+        PlayerCount.text = "Players Connected: " + n.ToString();
     }
 
     public override void OnStartServer()
@@ -70,8 +70,7 @@ public class LobbyManager : NetworkBehaviour
 
     public void StartGame()
     {
-        Debug.Log("StartGameCalled: "+isServer);
-        Debug.Log(SettingsManager.singleton.levelSelectMap["Maze"]);
+        Debug.Log("StartGameCalled: " + isServer);
         if (isServer)
         {
             FlyInBackground();
