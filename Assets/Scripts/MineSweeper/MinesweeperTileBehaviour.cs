@@ -1,12 +1,16 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using Mirror;
+using TMPro;
+using System;
+
 public class MinesweeperTileBehaviour : MonoBehaviour
 {
+    public int id;
+    public TextMeshProUGUI tm;
     
-    public bool isBomb;
     [SerializeField][Range(0f,2f)]
     float tileShrinkTime;
     [SerializeField][Range(0f, 2f)]
@@ -20,30 +24,69 @@ public class MinesweeperTileBehaviour : MonoBehaviour
     [SerializeField]
     ParticleSystem ps;
     [SerializeField]
-    Transform coverImage;
+    Image coverImage;
+    [SerializeField] 
+    Color SelectedBorderColour;
+    [SerializeField][Range(0f,2f)]
+    float ColourTransitionDuration = 0.5f;
+    [SerializeField] 
+    Image Border;
 
-    MineSweeperManager manager;
+    bool _isBomb = false;
+    public bool IsBomb { get { return _isBomb; } set { SetBomb(value); } }
+
+    Tween twGrowTile; 
+    public event Action<int> Selected;
     Image baseImage;
 
-    private void Start()
+    private void Awake()
     {
         baseImage = GetComponent<Image>();
-        manager = GameObject.FindWithTag("MinigameManager").GetComponent<MineSweeperManager>();
-        SetBomb(isBomb);
+        twGrowTile = transform.DOScale(0, tileShrinkTime).From().Play();
+        //SetBomb(IsBomb);
+        coverImage.raycastTarget = false;
     }
 
+    public void SetPlayerMode(bool amPlayer)
+    {
+        if (amPlayer)
+        {
+            Debug.Log("Setting Player Mode...");
+            coverImage.raycastTarget = true;
+        }
+        else
+        {
+            Debug.Log("Setting Assistant Mode...");
+            Tween tw = coverImage.transform.DOScale(0f, tileShrinkTime).Pause();
+            tw.OnComplete(delegate { coverImage.gameObject.SetActive(false); });
+            if (twGrowTile.IsPlaying())
+            {
+                twGrowTile.OnComplete(delegate { tw.Play(); });
+            }
+            else
+            {
+                tw.Play();
+            }
+            
+            if(IsBomb) 
+                ps.Play();
+        }
+    }
+
+    [Client]
     public void SetBomb(bool isBomb)
     {
-        this.isBomb = isBomb;
+        this._isBomb = isBomb;
+        Debug.Log("bombImage: " + baseImage);
         if (isBomb) baseImage.sprite = bombSprite;
         else baseImage.sprite = clearSprite;
     }
 
     public void TileClicked()
     {
-        Tween tw = coverImage.DOScale(0f, tileShrinkTime).Play();
+        Tween tw = coverImage.transform.DOScale(0f, tileShrinkTime).Play();
         tw.OnComplete(TileRevealed);
-        if (isBomb)
+        if (IsBomb)
         {
             ps.Play();
         }
@@ -52,12 +95,17 @@ public class MinesweeperTileBehaviour : MonoBehaviour
     void TileRevealed()
     {
         coverImage.gameObject.SetActive(false);
-        if (isBomb)
+        if (IsBomb)
         {
             explosion.SetActive(true);
             Invoke(nameof(HideBomb), hideBombDelay);
             //TODO: Score Penalty
         }
+        else
+        {
+            HighlightTile();
+        }
+        if (Selected != null) { Selected.Invoke(id); }
     }
 
     void HideBomb()
@@ -66,4 +114,21 @@ public class MinesweeperTileBehaviour : MonoBehaviour
         ps.Stop();
     }
 
+    public void AssistantReactionTrigger()
+    {
+        if (IsBomb)
+        {
+            explosion.SetActive(true);
+            Invoke(nameof(HideBomb), hideBombDelay);
+        }
+        else
+        {
+            HighlightTile();
+        }
+    }
+
+    public void HighlightTile()
+    {
+        Border.DOColor(SelectedBorderColour, ColourTransitionDuration);
+    }
 }

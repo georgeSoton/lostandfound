@@ -19,7 +19,7 @@ public class MatchGameManager : NetworkBehaviour
         {5, 0.05f}
     };
     int wrongAnswerCount = 3;
-    Minigame minigameType = Minigame.None;
+    Minigame minigameType = Minigame.MatchGame;
     [SerializeField] FlexiSquareGridLayout TileGrid;
     [SerializeField] Local2DTile TilePrefab;
     List<Local2DTile> myTiles = new List<Local2DTile>();

@@ -876,6 +876,7 @@ MonoBehaviour:
   - {fileID: 1096196582}
   - {fileID: 652676607}
   - {fileID: 419786210}
+  - {fileID: 941134018}
 --- !u!114 &690006385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1212,9 +1213,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 815692315}
     m_Modifications:
+    - target: {fileID: 2829587912391777498, guid: 3cf1f3f929d34894aa82062d5a3c77b4, type: 3}
+      propertyPath: m_Text
+      value: Minesweeper
+      objectReference: {fileID: 0}
     - target: {fileID: 4170918018701261523, guid: 3cf1f3f929d34894aa82062d5a3c77b4, type: 3}
       propertyPath: m_Name
-      value: LevelSelectToggle (5)
+      value: Minesweeper
       objectReference: {fileID: 0}
     - target: {fileID: 5464810920826055633, guid: 3cf1f3f929d34894aa82062d5a3c77b4, type: 3}
       propertyPath: m_Pivot.x
@@ -1315,6 +1320,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5464810920826055633, guid: 3cf1f3f929d34894aa82062d5a3c77b4, type: 3}
   m_PrefabInstance: {fileID: 941134016}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &941134018 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 997248475008250687, guid: 3cf1f3f929d34894aa82062d5a3c77b4, type: 3}
+  m_PrefabInstance: {fileID: 941134016}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1096196582 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 997248475008250687, guid: 3cf1f3f929d34894aa82062d5a3c77b4, type: 3}

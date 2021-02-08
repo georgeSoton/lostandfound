@@ -58,8 +58,11 @@ public abstract class MinigameManagerBase : NetworkBehaviour
         Debug.Log("Player");
         PlayerCam.gameObject.SetActive(true);
         PlayerCam.enabled = true;
-        AssistantCam.gameObject.SetActive(false);
-        AssistantCam.enabled = false;
+        if(!ReferenceEquals(PlayerCam, AssistantCam))
+        {
+            AssistantCam.gameObject.SetActive(false);
+            AssistantCam.enabled = false;
+        }
         amPlayer = true;
     }
 
@@ -67,8 +70,11 @@ public abstract class MinigameManagerBase : NetworkBehaviour
     protected virtual void TargetMakeAssistant(NetworkConnection conn)
     {
         Debug.Log("Assistant");
-        PlayerCam.gameObject.SetActive(false);
-        PlayerCam.enabled = false;
+        if (!ReferenceEquals(PlayerCam, AssistantCam))
+        {
+            PlayerCam.gameObject.SetActive(false);
+            PlayerCam.enabled = false;
+        }
         AssistantCam.gameObject.SetActive(true);
         AssistantCam.enabled = true;
         amPlayer = false;

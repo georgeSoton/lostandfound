@@ -10,6 +10,8 @@ public enum Minigame
     Maze,
     DiceSorting,
     None,
+    Minesweeper,
+    MatchGame,
 }
 
 public class ScoreManager : NetworkBehaviour
