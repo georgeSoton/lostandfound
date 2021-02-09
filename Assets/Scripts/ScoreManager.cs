@@ -33,6 +33,7 @@ public class ScoreManager : NetworkBehaviour
     public float CurrentTimeMinutesOnly { get { return Mathf.Floor(currentTimeSeconds / 60); } }
     public float CurrentTimeSecondsOnly { get { return Mathf.Floor(currentTimeSeconds % 60); } }
 
+    public event Action<float> OnPenalty;
     public event Action OnEndGame;
 
     private float levelStartTime;
@@ -104,20 +105,20 @@ public class ScoreManager : NetworkBehaviour
 
     [Server]
     //Adds the given amount of time to the timer
-    public void AddTimeSeconds(float seconds)
+    void AddTimeSeconds(float seconds)
     {
         currentTimeSeconds += seconds;
         if (currentTimeSeconds > maxTimeSeconds) currentTimeSeconds = maxTimeSeconds;
         if (currentTimeSeconds < 0) currentTimeSeconds = 0;
     }
 
-    [Server]
-    //Deducts the given value from the current score
-    public void ScorePenalty(int scoreToDeduct) 
-    {
-        score -= scoreToDeduct;
-        if (score < 0) score = 0;
-    }
+    //[Server]
+    ////Deducts the given value from the current score
+    //public void ScorePenalty(int scoreToDeduct) 
+    //{
+    //    score -= scoreToDeduct;
+    //    if (score < 0) score = 0;
+    //}
 
     [Server]
     //Call at the start of every minigame
@@ -146,8 +147,14 @@ public class ScoreManager : NetworkBehaviour
                 timePenaltySeconds = 5;
                 break;
         }
-
+        OnPenaltyInvoke(timePenaltySeconds);
         AddTimeSeconds(-timePenaltySeconds);
+    }
+
+    [ClientRpc]
+    void OnPenaltyInvoke(float timePenalty)
+    {
+        if (OnPenalty != null) OnPenalty.Invoke(timePenalty);
     }
 
     [Server]
@@ -229,23 +236,12 @@ public class ScoreManager : NetworkBehaviour
     public string GetTimeRemaining()
     {
         string str = string.Format("{0:00}:{1:00}", CurrentTimeMinutesOnly, CurrentTimeSecondsOnly);
-        //Debug.Log(str);
         return str;
     }
     
     public float GetTimeRemainingSeconds()
     {
         return currentTimeSeconds;
-    }
-
-    [Server]
-    void StartCountdown()
-    {
-        if (!isCountdownActive)
-        {
-            ResetCountdown();
-            ResumeCountdown();
-        }
     }
 
     [Server]
@@ -266,6 +262,4 @@ public class ScoreManager : NetworkBehaviour
         PauseCountdown();
         currentTimeSeconds = maxTimeSeconds;
     }
-
-    
 }
