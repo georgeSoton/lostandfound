@@ -44,7 +44,7 @@ public class MineSweeperManager : MinigameManagerBase
         while (bombPositions.Count < tileCount)
             bombPositions.Add(false);
 
-        Shuffle(bombPositions);
+        ShuffleList(bombPositions);
     }
 
     public override void OnStartClient()
@@ -63,18 +63,6 @@ public class MineSweeperManager : MinigameManagerBase
             
     }
 
-    private void Shuffle<T>(IList<T> ts)
-    {
-        var count = ts.Count;
-        var last = count - 1;
-        for (var i = 0; i < last; ++i)
-        {
-            var r = UnityEngine.Random.Range(i, count);
-            var tmp = ts[i];
-            ts[i] = ts[r];
-            ts[r] = tmp;
-        }
-    }
     [TargetRpc]
     protected override void TargetMakeAssistant(NetworkConnection conn)
     {

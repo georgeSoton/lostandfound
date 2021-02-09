@@ -387,6 +387,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  PlayerCam: {fileID: 1835672653}
+  AssistantCam: {fileID: 1835672653}
+  amPlayer: 0
   TileGrid: {fileID: 566142655}
   TilePrefab: {fileID: 1148640568234865256, guid: 877d2699cbdf3934386bb3aa02ccd9fd, type: 3}
 --- !u!114 &912715774

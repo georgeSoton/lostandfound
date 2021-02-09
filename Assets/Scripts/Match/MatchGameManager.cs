@@ -7,7 +7,7 @@ using System.Linq;
 using Random = UnityEngine.Random;
 
 
-public class MatchGameManager : NetworkBehaviour
+public class MatchGameManager : MinigameManagerBase
 {
     string CorrectAnswer;
     string[] myAlpha;
@@ -19,15 +19,19 @@ public class MatchGameManager : NetworkBehaviour
         {5, 0.05f}
     };
     int wrongAnswerCount = 3;
-    Minigame minigameType = Minigame.MatchGame;
     [SerializeField] FlexiSquareGridLayout TileGrid;
     [SerializeField] Local2DTile TilePrefab;
     List<Local2DTile> myTiles = new List<Local2DTile>();
     Dictionary<int, string> clientChoices = new Dictionary<int, string>();
+
+    private void Awake()
+    {
+        minigameType = Minigame.MatchGame;
+    }
+
     public override void OnStartServer()
     {
         base.OnStartServer();
-        ScoreManager.singleton.StartMinigame();
         generateWrongAnswerCount();
         GrantedExtraCharacters = new List<List<string>>();
         myAlpha = Alphabets.Choices[Random.Range(0, Alphabets.Choices.Count)];
@@ -52,14 +56,8 @@ public class MatchGameManager : NetworkBehaviour
         throw new InvalidOperationException("Randomly selecting the number of wrong answers broke.");
     }
 
-    public override void OnStartClient()
-    {
-        base.OnStartClient();
-        CmdClientReady();
-    }
-
     [Command(ignoreAuthority = true)]
-    protected virtual void CmdClientReady(NetworkConnectionToClient conn = null)
+    protected override void CmdClientReady(NetworkConnectionToClient conn = null)
     {
         // We will use a local copy of the alphabet to select from
         var localAlpha = new List<String>(myAlpha);
@@ -89,7 +87,7 @@ public class MatchGameManager : NetworkBehaviour
     }
 
     [TargetRpc]
-    protected virtual void TargetSetOptions(NetworkConnection conn, List<String> options)
+    void TargetSetOptions(NetworkConnection conn, List<String> options)
     {
         var numOpts = options.Count;
         var sqrt = Mathf.CeilToInt(Mathf.Sqrt((float)numOpts));
@@ -115,43 +113,6 @@ public class MatchGameManager : NetworkBehaviour
             tile.transform.localScale = Vector3.one;
             myTiles.Add(tile);
             tile.Selected += TileClicked;
-        }
-    }
-    [ClientRpc]
-    void FlyInBackground()
-    {
-        FindObjectOfType<TransitionWipe>().Obscure();
-    }
-
-    [Server]
-    protected void EndMinigame(bool isWin)
-    {
-        FlyInBackground();
-        if (isWin) //level complete
-        {
-            ScoreManager.singleton.MinigameComplete(minigameType);
-            Invoke(nameof(AdvanceScene), 1.5f);
-        }
-        else //TimeOut or player disconnect
-        {
-            Debug.LogWarning("TODO: NOT YET IMPLEMENTED");
-        }
-    }
-
-    [Server]
-    private void AdvanceScene()
-    {
-        SceneChanger.singleton.NewRandomScene();
-    }
-
-    static void ShuffleList<T>(IList<T> inlist)
-    {
-        for (int i = 0; i < inlist.Count; i++)
-        {
-            T temp = inlist[i];
-            int randomIndex = Random.Range(i, inlist.Count);
-            inlist[i] = inlist[randomIndex];
-            inlist[randomIndex] = temp;
         }
     }
 

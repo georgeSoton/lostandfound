@@ -107,4 +107,14 @@ public abstract class MinigameManagerBase : NetworkBehaviour
         SceneChanger.singleton.NewRandomScene();
     }
 
+    protected void ShuffleList<T>(IList<T> inlist)
+    {
+        for (int i = 0; i < inlist.Count; i++)
+        {
+            T temp = inlist[i];
+            int randomIndex = Random.Range(i, inlist.Count);
+            inlist[i] = inlist[randomIndex];
+            inlist[randomIndex] = temp;
+        }
+    }
 }
