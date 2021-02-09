@@ -27,14 +27,17 @@ EditorBuildSettings:
     path: Assets/Scenes/Sorter.unity
     guid: 0297191311a18b448a3ccdcb8dc9eee3
   - enabled: 1
-    path: Assets/Scenes/SplashSelectSame.unity
-    guid: 6a7512ee8471c5b41965eee10294cfcf
-  - enabled: 1
     path: Assets/Scenes/SelectSame.unity
     guid: b9ac174e2c8d83c46b07b47a1ab626b3
   - enabled: 1
     path: Assets/Scenes/Minesweeper.unity
     guid: 1b76f96d43ddb8d40a49f37d569ef05c
+  - enabled: 1
+    path: Assets/Scenes/SplashSelectSame.unity
+    guid: 6a7512ee8471c5b41965eee10294cfcf
+  - enabled: 1
+    path: Assets/Scenes/SplashMinesweeper.unity
+    guid: bc6193f76ec3f224fbff7a2424b8156d
   - enabled: 1
     path: Assets/Scenes/SplashMaze.unity
     guid: 36dee242e9cad604b96dba61e8b80370
