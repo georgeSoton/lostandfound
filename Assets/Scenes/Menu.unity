@@ -404,7 +404,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 353409948}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 220.14713, y: 301.42975, z: 101.92026}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -424,12 +424,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showDebugMessages: 0
   sceneList:
-  - LetterSelect
-  - ColourMatch
-  - Maze
-  - Sorter
-  - SelectSame
-  - Minesweeper
+  - SplashLetterSelect
+  - SplashColourMatch
+  - SplashMaze
+  - SplashSorter
+  - SplashSelectSame
 --- !u!1 &487685271
 GameObject:
   m_ObjectHideFlags: 0
@@ -1313,7 +1312,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0

@@ -327,7 +327,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4170918018701261523, guid: 3cf1f3f929d34894aa82062d5a3c77b4, type: 3}
       propertyPath: m_Name
-      value: Sorter
+      value: SplashSorter
       objectReference: {fileID: 0}
     - target: {fileID: 5464810920826055633, guid: 3cf1f3f929d34894aa82062d5a3c77b4, type: 3}
       propertyPath: m_Pivot.x
@@ -452,7 +452,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4170918018701261523, guid: 3cf1f3f929d34894aa82062d5a3c77b4, type: 3}
       propertyPath: m_Name
-      value: Maze
+      value: SplashMaze
       objectReference: {fileID: 0}
     - target: {fileID: 5464810920826055633, guid: 3cf1f3f929d34894aa82062d5a3c77b4, type: 3}
       propertyPath: m_Pivot.x
@@ -679,7 +679,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4170918018701261523, guid: 3cf1f3f929d34894aa82062d5a3c77b4, type: 3}
       propertyPath: m_Name
-      value: SelectSame
+      value: SplashSelectSame
       objectReference: {fileID: 0}
     - target: {fileID: 5464810920826055633, guid: 3cf1f3f929d34894aa82062d5a3c77b4, type: 3}
       propertyPath: m_Pivot.x
@@ -1845,7 +1845,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4170918018701261523, guid: 3cf1f3f929d34894aa82062d5a3c77b4, type: 3}
       propertyPath: m_Name
-      value: ColourMatch
+      value: SplashColourMatch
       objectReference: {fileID: 0}
     - target: {fileID: 5464810920826055633, guid: 3cf1f3f929d34894aa82062d5a3c77b4, type: 3}
       propertyPath: m_Pivot.x
@@ -2038,7 +2038,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4170918018701261523, guid: 3cf1f3f929d34894aa82062d5a3c77b4, type: 3}
       propertyPath: m_Name
-      value: LetterSelect
+      value: SplashLetterSelect
       objectReference: {fileID: 0}
     - target: {fileID: 5464810920826055633, guid: 3cf1f3f929d34894aa82062d5a3c77b4, type: 3}
       propertyPath: m_Pivot.x
