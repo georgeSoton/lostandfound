@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 using UnityEngine.Serialization;
+using System;
+
 public enum Minigame
 {
     LetterSelect,
@@ -27,11 +29,11 @@ public class ScoreManager : NetworkBehaviour
     [SerializeField] 
     float currentTimeSeconds = 0;
 
-
     private bool isCountdownActive;
     public float CurrentTimeMinutesOnly { get { return Mathf.Floor(currentTimeSeconds / 60); } }
     public float CurrentTimeSecondsOnly { get { return Mathf.Floor(currentTimeSeconds % 60); } }
 
+    public event Action OnEndGame;
 
     private float levelStartTime;
     private int levelsCleared;
@@ -80,8 +82,10 @@ public class ScoreManager : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isServer) {
-            if (isCountdownActive) {
+        if (isServer)
+        {
+            if (isCountdownActive)
+            {
                 currentTimeSeconds -= Time.deltaTime;
                 if (currentTimeSeconds < 0)
                 {
@@ -89,6 +93,11 @@ public class ScoreManager : NetworkBehaviour
                     PauseCountdown();
                     //Maybe trigger event when this happens?
                 }
+            }
+
+            if (currentTimeSeconds == 0 && OnEndGame != null)
+            {
+                OnEndGame.Invoke();
             }
         }
     }
@@ -257,4 +266,6 @@ public class ScoreManager : NetworkBehaviour
         PauseCountdown();
         currentTimeSeconds = maxTimeSeconds;
     }
+
+    
 }
