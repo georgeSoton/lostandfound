@@ -24,6 +24,8 @@ public class SortingManager : MinigameManagerBase
 
     private void Awake()
     {
+        minigameType = Minigame.DiceSorting;
+        
         itemControllers = new List<ItemController>();
         foreach (var die in dice)
         {
@@ -111,6 +113,14 @@ public class SortingManager : MinigameManagerBase
         {
             _taskFinished = true;
             EndMinigame(true);
+        }
+        else
+        {
+            //Check all dice are top or bot
+            if((sentTop + sentBot) == (_top + _bot))
+            {
+                ScoreManager.singleton.Penalty(minigameType);
+            }
         }
 
         Debug.Log("Top:" + _top + "\nBot:" + _bot);

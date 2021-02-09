@@ -99,6 +99,7 @@ public class ScoreManager : NetworkBehaviour
     {
         currentTimeSeconds += seconds;
         if (currentTimeSeconds > maxTimeSeconds) currentTimeSeconds = maxTimeSeconds;
+        if (currentTimeSeconds < 0) currentTimeSeconds = 0;
     }
 
     [Server]
@@ -118,30 +119,83 @@ public class ScoreManager : NetworkBehaviour
     }
 
     [Server]
+    public void Penalty(Minigame gameType)
+    {
+        float timePenaltySeconds = 0;
+        switch (gameType)
+        {
+            case Minigame.LetterSelect:
+                timePenaltySeconds = 5;
+                break;
+            case Minigame.DiceSorting:
+                timePenaltySeconds = 5;
+                break;
+            case Minigame.Maze:
+                timePenaltySeconds = 5;
+                break;
+            case Minigame.Minesweeper:
+                timePenaltySeconds = 5;
+                break;
+        }
+
+        AddTimeSeconds(-timePenaltySeconds);
+    }
+
+    [Server]
     //Call when a minigame is completed
     public void MinigameComplete(Minigame gameType)
     {
         PauseCountdown();
-        int baseScore;
-        int extraTimeSeconds;
-        float maxScoreClearTime;
-        float minScoreClearTime;
-        float TimeBonusMax;
-        switch (gameType)
+        int baseScore = 20;
+        int extraTimeSeconds = 10;
+        float maxScoreClearTime = 5;
+        float minScoreClearTime = 10;
+        float TimeBonusMax = 20;
+        switch (gameType) //Score and time rewards
         {
             case Minigame.LetterSelect:
-                baseScore = 200;
-                extraTimeSeconds = 5;
-                maxScoreClearTime = 7;
-                minScoreClearTime = 15;
-                TimeBonusMax = 200;
-                break;
-            default:
                 baseScore = 100;
-                extraTimeSeconds = 10;
-                maxScoreClearTime = 5;
+                extraTimeSeconds = 3;
+                maxScoreClearTime = 3;
                 minScoreClearTime = 10;
                 TimeBonusMax = 100;
+                break;
+            case Minigame.ColourMatch:
+                baseScore = 300;
+                extraTimeSeconds = 10;
+                maxScoreClearTime = 10;
+                minScoreClearTime = 20;
+                TimeBonusMax = 300;
+                break;
+            case Minigame.DiceSorting:
+                baseScore = 100;
+                extraTimeSeconds = 3;
+                maxScoreClearTime = 3;
+                minScoreClearTime = 10;
+                TimeBonusMax = 100;
+                break;
+            case Minigame.MatchGame:
+                baseScore = 150;
+                extraTimeSeconds = 5;
+                maxScoreClearTime = 5;
+                minScoreClearTime = 15;
+                TimeBonusMax = 150;
+                break;
+            case Minigame.Maze:
+                baseScore = 450;
+                extraTimeSeconds = 5;
+                maxScoreClearTime = 15;
+                minScoreClearTime = 40;
+                TimeBonusMax = 450;
+                break;
+            case Minigame.Minesweeper:
+                baseScore = 450;
+                extraTimeSeconds = 5;
+                maxScoreClearTime = 15;
+                minScoreClearTime = 40;
+                TimeBonusMax = 450;
+                break;
+            default:
                 break;
         }
         float t = 1-Mathf.Clamp(((levelStartTime - currentTimeSeconds) - maxScoreClearTime) / (minScoreClearTime - maxScoreClearTime), 0, 1);
@@ -152,7 +206,6 @@ public class ScoreManager : NetworkBehaviour
         //Debug.Log("Score: " + score);
         levelsCleared++;
         AddTimeSeconds(extraTimeSeconds);
-
     }
 
     [Server]
@@ -185,16 +238,19 @@ public class ScoreManager : NetworkBehaviour
             ResumeCountdown();
         }
     }
+
     [Server]
     void PauseCountdown()
     {
         isCountdownActive = false;
     }
+
     [Server]
     void ResumeCountdown()
     {
         isCountdownActive = true;
     }
+
     [Server]
     void ResetCountdown()
     {
