@@ -141,6 +141,8 @@ public class MineSweeperManager : MinigameManagerBase
         Debug.Log(nameof(TileCleared) + " Called");
         if(bombPositions[id]==false)
             correctTilesCleared++;
+        else
+            ScoreManager.singleton.Penalty(minigameType);
 
         tilesClearedMap[id] = true;
 

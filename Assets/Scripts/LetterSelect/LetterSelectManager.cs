@@ -16,6 +16,11 @@ public class LetterSelectManager : MinigameManagerBase
     bool subbedToTiles = false;
     bool TaskComplete = false;
 
+    private void Awake()
+    {
+        minigameType = Minigame.LetterSelect;
+    }
+
     public override void OnStartServer()
     {
         base.OnStartServer();
@@ -77,6 +82,7 @@ public class LetterSelectManager : MinigameManagerBase
         }
         else
         {
+            ScoreManager.singleton.Penalty(minigameType);
             Debug.Log("Incorrect");
         }
     }

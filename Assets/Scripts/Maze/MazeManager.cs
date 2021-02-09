@@ -28,6 +28,11 @@ public class MazeManager : MinigameManagerBase
     bool MovingATM = false;
     bool AxisReadyForNewMovement = true;
 
+    private void Awake()
+    {
+        minigameType = Minigame.Maze;
+    }
+
     void Start()
     {
         if (isServer)
@@ -126,6 +131,7 @@ public class MazeManager : MinigameManagerBase
         }
         else
         {
+            ScoreManager.singleton.Penalty(minigameType);
             FailShake(); return;
         }
     }

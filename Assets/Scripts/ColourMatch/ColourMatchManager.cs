@@ -25,6 +25,10 @@ public class ColourMatchManager : MinigameManagerBase
     Color CorrectAnswer;
     [SyncVar(hook=nameof(TriedColourChanged))]
     Color TriedColour;
+    private void Awake()
+    {
+        minigameType = Minigame.ColourMatch;
+    }
 
     void TriedColourChanged(Color _, Color n)
     {

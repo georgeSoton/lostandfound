@@ -13,6 +13,8 @@ public abstract class MinigameManagerBase : NetworkBehaviour
     [SerializeField]
     protected bool amPlayer = false;
     protected Minigame minigameType = Minigame.None;
+    
+    private bool endGame;
 
     private void Update()
     {
@@ -28,6 +30,8 @@ public abstract class MinigameManagerBase : NetworkBehaviour
     public override void OnStartServer()
     {
         base.OnStartServer();
+        endGame = false;
+        ScoreManager.singleton.OnEndGame += EndGame;
         var clientkeys = NetworkServer.connections.Keys.ToArray();
         playerID = NetworkServer.connections[clientkeys[Random.Range(0, clientkeys.Length)]];
         ScoreManager.singleton.StartMinigame();
@@ -89,23 +93,32 @@ public abstract class MinigameManagerBase : NetworkBehaviour
     [Server]
     protected void EndMinigame(bool isWin)
     {
-        FlyInBackground();
-        if (isWin) //level complete
+        if (!IsInvoking(nameof(AdvanceScene)))
         {
-            ScoreManager.singleton.MinigameComplete(minigameType);
+            ScoreManager.singleton.OnEndGame -= EndGame;
+            FlyInBackground();
+            if (isWin) //level complete
+            {
+                ScoreManager.singleton.MinigameComplete(minigameType);
+            }
             Invoke(nameof(AdvanceScene), 1.5f);
-        }
-        else //TimeOut or player disconnect
-        {
-            Debug.LogWarning("TODO: NOT YET IMPLEMENTED");
         }
     }
 
     [Server]
     private void AdvanceScene()
     {
-        SceneChanger.singleton.NewRandomScene();
+        if (endGame)
+        {
+            SceneChanger.singleton.EndGame();
+        }
+        else
+        {
+            SceneChanger.singleton.NewRandomScene();
+        }
     }
+
+    
 
     protected void ShuffleList<T>(IList<T> inlist)
     {
@@ -116,5 +129,16 @@ public abstract class MinigameManagerBase : NetworkBehaviour
             inlist[i] = inlist[randomIndex];
             inlist[randomIndex] = temp;
         }
+    }
+
+    private void EndGame()
+    {
+        endGame = true;
+        EndMinigame(false);
+    }
+
+    void OnDestroy()
+    {
+        ScoreManager.singleton.OnEndGame -= EndGame;
     }
 }

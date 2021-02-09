@@ -430,6 +430,7 @@ MonoBehaviour:
   syncInterval: 0.1
   PlayerCam: {fileID: 1051047642}
   AssistantCam: {fileID: 1707071590}
+  amPlayer: 0
   OpenTile: {fileID: 7979727056429656173, guid: b18eb2a06f0f75d46a48c35665d09e3b, type: 3}
   ClosedTile: {fileID: 6863783580197478843, guid: 5ffb47bed94bb6a4297a38d6c08a27cf, type: 3}
   EndObject: {fileID: 6863783580197478843, guid: 01dd9592b06e68b4895d9b34aef81828, type: 3}
@@ -1050,6 +1051,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1365845227}
     m_Modifications:
+    - target: {fileID: 904632234944145310, guid: b43d205ced9b1e94abdf52b12eada0fa, type: 3}
+      propertyPath: m_fontSize
+      value: 132.05
+      objectReference: {fileID: 0}
     - target: {fileID: 1003649429517190913, guid: b43d205ced9b1e94abdf52b12eada0fa, type: 3}
       propertyPath: m_Name
       value: TimerText
@@ -1136,6 +1141,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1003649429517190917, guid: b43d205ced9b1e94abdf52b12eada0fa, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5564859103949248403, guid: b43d205ced9b1e94abdf52b12eada0fa, type: 3}
+      propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
