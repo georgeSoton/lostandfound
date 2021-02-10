@@ -131,13 +131,13 @@ public class MazeManager : MinigameManagerBase
         }
         else
         {
-            ScoreManager.singleton.Penalty(minigameType);
             FailShake(); return;
         }
     }
 
     void FailShake()
     {
+        ScoreManager.singleton.Penalty(minigameType);
         MovingATM = true;
         PlayerLocation.DOShakeRotation(0.5f, strength: new Vector3(0, 0, 10)).Play();
         PlayerLocation.DOShakeAnchorPos(0.5f, strength: 10).OnComplete(() => FinishedMoving()).Play();
