@@ -47,15 +47,15 @@ public class SummaryManager : NetworkBehaviour
     void RevealRating()
     {
         int starCount = 0;
-        if (ScoreManager.singleton.Score >= 2000)
+        if (ScoreManager.singleton.Score >= 1500)
         {
             starCount += 1;
         }
-        if (ScoreManager.singleton.Score >= 5000)
+        if (ScoreManager.singleton.Score >= 4000)
         {
             starCount += 1;
         }
-        if (ScoreManager.singleton.Score >= 10000)
+        if (ScoreManager.singleton.Score >= 7000)
         {
             starCount += 1;
         }
