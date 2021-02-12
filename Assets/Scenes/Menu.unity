@@ -2512,8 +2512,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: For most home networks, In order for clients to connect you will need to
     port foward the hosting computer on port 7777 and google search for your global
-    IP address. If clients are all connected to the same LAN/VPN as the host the
-    local IP address shown in the lobby can be used to connect without port fowarding.
+    IP address. If clients are all connected to the same LAN as the host the local
+    IP address shown in the lobby can be used to connect without port fowarding.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
