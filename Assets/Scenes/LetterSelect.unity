@@ -995,7 +995,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4148466949400756936, guid: ad7983cbfd7f1b740bd780ae4b962d42, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -56.2
+      value: -56.199997
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad7983cbfd7f1b740bd780ae4b962d42, type: 3}
@@ -2083,7 +2083,7 @@ Camera:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1797772163}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 4
   m_BackGroundColor: {r: 0.8490566, g: 0.22965871, b: 0, a: 0}

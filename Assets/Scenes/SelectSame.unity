@@ -393,6 +393,7 @@ MonoBehaviour:
   syncInterval: 0.1
   PlayerCam: {fileID: 1835672653}
   AssistantCam: {fileID: 1835672653}
+  playerIndicator: {fileID: 0}
   amPlayer: 0
   TileGrid: {fileID: 566142655}
   TilePrefab: {fileID: 1148640568234865256, guid: 877d2699cbdf3934386bb3aa02ccd9fd, type: 3}

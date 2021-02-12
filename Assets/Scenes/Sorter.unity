@@ -448,19 +448,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4148466949400756936, guid: ad7983cbfd7f1b740bd780ae4b962d42, type: 3}
       propertyPath: m_Pivot.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4148466949400756936, guid: ad7983cbfd7f1b740bd780ae4b962d42, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4148466949400756936, guid: ad7983cbfd7f1b740bd780ae4b962d42, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4148466949400756936, guid: ad7983cbfd7f1b740bd780ae4b962d42, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 130.7
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 4148466949400756936, guid: ad7983cbfd7f1b740bd780ae4b962d42, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1220,7 +1220,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 105.75
+  m_fontSize: 132.85
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2086,7 +2086,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 105.75
+  m_fontSize: 132.85
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2315,7 +2315,7 @@ Camera:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1947103698}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 4
   m_BackGroundColor: {r: 0.8490566, g: 0.22965871, b: 0, a: 0}

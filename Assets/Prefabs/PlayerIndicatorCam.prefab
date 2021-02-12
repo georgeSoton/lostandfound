@@ -119,6 +119,7 @@ GameObject:
   - component: {fileID: 4148466949400756936}
   - component: {fileID: 4148466949400756942}
   - component: {fileID: 4148466949400756943}
+  - component: {fileID: 1216227760100230649}
   m_Layer: 5
   m_Name: PlayerIndicator
   m_TagString: Untagged
@@ -242,6 +243,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1216227760100230649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4148466949400756937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b547a4ba98feb94187bda707097d6ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minT: 0.3
+  maxT: 0.5
 --- !u!1 &4148466949728119715
 GameObject:
   m_ObjectHideFlags: 0
