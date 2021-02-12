@@ -43,6 +43,10 @@ public class ScoreManager : NetworkBehaviour
     private int score;
     public int Score { get { return score; } }
 
+    [SyncVar]
+    private int roundCount;
+    public int RoundCount { get { return roundCount; } }
+
     public static ScoreManager singleton { get; private set; }
 
     public override void OnStartClient()
@@ -162,6 +166,7 @@ public class ScoreManager : NetworkBehaviour
     public void MinigameComplete(Minigame gameType)
     {
         PauseCountdown();
+        roundCount += 1;
         int baseScore = 20;
         int extraTimeSeconds = 10;
         float maxScoreClearTime = 5;
@@ -231,6 +236,7 @@ public class ScoreManager : NetworkBehaviour
         levelStartTime = 0;
         levelsCleared = 0;
         score = 0;
+        roundCount = 0;
     }
 
     public string GetTimeRemaining()

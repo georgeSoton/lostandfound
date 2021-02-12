@@ -83,9 +83,16 @@ public class SceneChanger : MonoBehaviour
 
     }
 
+    [Server]
     public void EndGame()
     {
         Debug.Log("TODO: GAME OVER!");
+        NetworkManager.singleton.ServerChangeScene("Summary");
+    }
+
+    [Server]
+    public void ReturnToLobby()
+    {
         NetworkManager.singleton.ServerChangeScene("Lobby");
     }
 }
