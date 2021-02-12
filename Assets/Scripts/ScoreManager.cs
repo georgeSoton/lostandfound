@@ -145,7 +145,7 @@ public class ScoreManager : NetworkBehaviour
                 timePenaltySeconds = 5;
                 break;
             case Minigame.Maze:
-                timePenaltySeconds = 5;
+                timePenaltySeconds = 1;
                 break;
             case Minigame.Minesweeper:
                 timePenaltySeconds = 5;
@@ -176,42 +176,42 @@ public class ScoreManager : NetworkBehaviour
         {
             case Minigame.LetterSelect:
                 baseScore = 100;
-                extraTimeSeconds = 3;
+                extraTimeSeconds = 10;
                 maxScoreClearTime = 3;
                 minScoreClearTime = 10;
                 TimeBonusMax = 100;
                 break;
             case Minigame.ColourMatch:
                 baseScore = 300;
-                extraTimeSeconds = 10;
+                extraTimeSeconds = 30;
                 maxScoreClearTime = 10;
                 minScoreClearTime = 20;
                 TimeBonusMax = 300;
                 break;
             case Minigame.DiceSorting:
                 baseScore = 100;
-                extraTimeSeconds = 3;
+                extraTimeSeconds = 15;
                 maxScoreClearTime = 3;
                 minScoreClearTime = 10;
                 TimeBonusMax = 100;
                 break;
             case Minigame.MatchGame:
                 baseScore = 150;
-                extraTimeSeconds = 5;
+                extraTimeSeconds = 15;
                 maxScoreClearTime = 5;
                 minScoreClearTime = 15;
                 TimeBonusMax = 150;
                 break;
             case Minigame.Maze:
                 baseScore = 450;
-                extraTimeSeconds = 5;
+                extraTimeSeconds = 30;
                 maxScoreClearTime = 15;
                 minScoreClearTime = 40;
                 TimeBonusMax = 450;
                 break;
             case Minigame.Minesweeper:
                 baseScore = 450;
-                extraTimeSeconds = 5;
+                extraTimeSeconds = 30;
                 maxScoreClearTime = 15;
                 minScoreClearTime = 40;
                 TimeBonusMax = 450;

@@ -63,5 +63,5 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   showDebugMessages: 0
-  maxTimeSeconds: 120
+  maxTimeSeconds: 600
   currentTimeSeconds: 0
