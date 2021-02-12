@@ -22,7 +22,6 @@ public class RatingBehaviour : MonoBehaviour
         {
             star.transform.localScale = Vector3.zero;
         }
-        ShowStars(3);
     }
 
     public void ShowStars(int rating)
