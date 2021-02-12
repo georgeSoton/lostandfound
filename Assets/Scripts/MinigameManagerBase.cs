@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Mirror;
-
+using TMPro;
 public abstract class MinigameManagerBase : NetworkBehaviour
 {
     [SerializeField] public Camera PlayerCam;
     [SerializeField] public Camera AssistantCam;
-
+    [SerializeField] TextMeshProUGUI playerIndicator;
     protected NetworkConnection playerID;
     [SerializeField]
     protected bool amPlayer = false;
@@ -68,6 +68,7 @@ public abstract class MinigameManagerBase : NetworkBehaviour
             AssistantCam.enabled = false;
         }
         amPlayer = true;
+        SetPlayerIndicator();
     }
 
     [TargetRpc]
@@ -82,6 +83,7 @@ public abstract class MinigameManagerBase : NetworkBehaviour
         AssistantCam.gameObject.SetActive(true);
         AssistantCam.enabled = true;
         amPlayer = false;
+        SetPlayerIndicator();
     }
 
     [ClientRpc]
@@ -130,6 +132,22 @@ public abstract class MinigameManagerBase : NetworkBehaviour
             inlist[randomIndex] = temp;
         }
     }
+
+    void SetPlayerIndicator()
+    {
+        if (playerIndicator != null)
+        {
+            if (amPlayer)
+            {
+                playerIndicator.text = "Player";
+            }
+            else
+            {
+                playerIndicator.text = "Assistant";
+            }
+        }
+    }
+
 
     private void EndGame()
     {
